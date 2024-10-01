@@ -126,7 +126,7 @@ export const getStaticProps: GetStaticProps = async () => {
                 },
                 {
                     id: "test-2",
-                    title: "second quiz",
+                    title: "Second quiz",
                     description: "Testing quizes",
                 },
             ],
@@ -138,10 +138,19 @@ export default function Home({ quizes }: Props) {
     return (
         <>
             <h1>Take a quiz</h1>
-            <AddQuiz />
-            {quizes.map((quiz: any) => (
-                <QuizCard key={quiz.id} {...quiz} />
-            ))}
+            <div
+                style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "flex-start",
+                    gap: 20,
+                }}
+            >
+                <AddQuiz />
+                {quizes.map((quiz: any) => (
+                    <QuizCard key={quiz.id} {...quiz} />
+                ))}
+            </div>
         </>
     );
 }
