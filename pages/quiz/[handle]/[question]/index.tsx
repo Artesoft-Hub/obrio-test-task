@@ -7,20 +7,20 @@ const quizData: any = {
         q1: {
             text: "What do you enjoy the most?",
             options: [
-                { id: "a1", text: "Reading books", nextQuestion: "q2" },
-                { id: "a2", text: "Watching videos", nextQuestion: "q3" },
+                { id: "a1", text: "Reading books", next: "q2" },
+                { id: "a2", text: "Watching videos", next: "q3" },
                 {
                     id: "a3",
                     text: "Hands-on activities",
-                    nextQuestion: "q4",
+                    next: "q4",
                 },
             ],
         },
         q2: {
             text: "What type of books do you prefer?",
             options: [
-                { id: "a4", text: "Fiction", nextQuestion: "q5" },
-                { id: "a5", text: "Non-fiction", nextQuestion: "q5" },
+                { id: "a4", text: "Fiction", next: "q5" },
+                { id: "a5", text: "Non-fiction", next: "q5" },
             ],
         },
     },
@@ -45,8 +45,8 @@ export default function QuizQuestion() {
         return <div>Loading...</div>;
     }
 
-    const handleAnswerClick = (nextQuestion: string) => {
-        router.push(`/quiz/${handle}/${nextQuestion}`);
+    const handleAnswerClick = (next: string) => {
+        router.push(`/quiz/${handle}/${next}`);
     };
 
     return (
@@ -57,7 +57,7 @@ export default function QuizQuestion() {
                     <li key={option.id}>
                         <button
                             onClick={() =>
-                                handleAnswerClick(option.nextQuestion)
+                                handleAnswerClick(option.next)
                             }
                         >
                             {option.text}
