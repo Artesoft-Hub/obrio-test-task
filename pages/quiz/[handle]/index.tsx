@@ -1,5 +1,5 @@
 import { NextApiAdapter } from "@/data/adapters/nextApi.adapter";
-import { store } from "@/data/store/store";
+import { RootState, store } from "@/data/store/store";
 import { StoreDAO } from "@/data/store/store.dao";
 import { QuizDTO } from "@/domain/model/quiz.dto";
 import { Quiz } from "@/domain/queries/Quiz";
@@ -7,7 +7,7 @@ import { GetStaticPaths, GetStaticProps } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
-import { useStore } from "react-redux";
+import { useSelector, useStore } from "react-redux";
 
 type Props = {
     dto: QuizDTO;
@@ -41,22 +41,31 @@ const QuizWelcomeScreen = ({ dto }: Props) => {
     const quiz = new Quiz(dto);
     const router = useRouter();
     const { handle } = router.query;
+    const results = useSelector((state: RootState) => state.quizzes.results);
 
     const title = quiz.getTitle();
     const description = quiz.getDescription();
     const firstQuestionID = quiz.getFirstQuestion().getId();
 
-    const handleClick = () => {
+    const handleStart = () => {
         const dao = new StoreDAO(store);
         dao.startQuiz(quiz.getId());
         router.push(`/quiz/${handle}/${firstQuestionID}`);
+    };
+
+    const handleResults = () => {
+        router.push(`/quiz/${handle}/results`);
     };
 
     return (
         <div>
             <h2>{title}</h2>
             <p>{description}</p>
-            <button onClick={handleClick}>Start quiz</button>
+            {quiz.getId()}
+            {quiz.getId() in results && results[quiz.getId()].finished && (
+                <button onClick={handleResults}>View results</button>
+            )}
+            <button onClick={handleStart}>Start quiz</button>
         </div>
     );
 };

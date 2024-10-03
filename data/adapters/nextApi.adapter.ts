@@ -136,7 +136,7 @@ export class NextApiAdapter implements DatabaseAdapter {
         console.log("Response from the server");
 
         return {
-            id: "test-1",
+            id: id,
             title: "Personality Quiz",
             description: "Find out what kind of learner you are.",
             questions: [

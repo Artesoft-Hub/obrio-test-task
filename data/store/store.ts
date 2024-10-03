@@ -6,8 +6,9 @@ import { createWrapper, HYDRATE } from "next-redux-wrapper";
 interface QuizResult {
     finished: boolean;
     answers: {
-        [question: string]: string[];
-    };
+        questionId: string;
+        optionIds: string[];
+    }[];
 }
 
 interface QuizzesState {
@@ -31,7 +32,7 @@ const quizSlice = createSlice({
         startQuiz: (state, action) => {
             const { quizId } = action.payload;
             console.log("hello");
-            state.results[quizId] = { finished: false, answers: {} };
+            state.results[quizId] = { finished: false, answers: [] };
         },
         finishQuiz: (state, action) => {
             const { quizId } = action.payload;
@@ -44,7 +45,10 @@ const quizSlice = createSlice({
 
         answerQuestion: (state, action) => {
             const { quizId, questionId, options } = action.payload;
-            state.results[quizId].answers[questionId] = options;
+            state.results[quizId].answers.push({
+                questionId,
+                optionIds: options,
+            });
         },
     },
     extraReducers: (builder) => {
