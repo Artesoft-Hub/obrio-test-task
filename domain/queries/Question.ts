@@ -18,6 +18,10 @@ export class Question implements QuestionQuery {
         return this.mapKeysToTitle(this.dto.title, keys);
     }
 
+    getDescription(): string | undefined {
+        return this.dto.description;
+    }
+
     getType(): QuestionType {
         return this.dto.type;
     }

@@ -1,8 +1,12 @@
+import InfoScreen from "@/components/InfoScreen";
+import SingleSelectQuestion from "@/components/SingleSelectQuestion";
+import UnknownScreen from "@/components/UnknownScreen";
 import { NextApiAdapter } from "@/data/adapters/nextApi.adapter";
 import { RootState, store } from "@/data/store/store";
 import { StoreDAO } from "@/data/store/store.dao";
 import { OptionQuery } from "@/domain/model/option.query";
-import { QuestionDTO } from "@/domain/model/question.dto";
+import { QuestionDTO, QuestionType } from "@/domain/model/question.dto";
+import { QuestionQuery } from "@/domain/model/question.query";
 import { Question } from "@/domain/queries/Question";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { useRouter } from "next/router";
@@ -11,6 +15,12 @@ import { useSelector } from "react-redux";
 type Props = {
     handle: string;
     dto: QuestionDTO;
+};
+
+type ScreenProps = {
+    keys: { [key: string]: any };
+    question: QuestionQuery;
+    submitAnswer: (options: OptionQuery) => void;
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -42,6 +52,11 @@ export const getStaticProps: GetStaticProps<
     };
 };
 
+const TYPE_TO_SCREEN = new Map<QuestionType, React.FC<ScreenProps>>([
+    [QuestionType.Info, InfoScreen],
+    [QuestionType.SingleSelect, SingleSelectQuestion],
+]);
+
 export default function QuizQuestion({ dto, handle }: Props) {
     const results = useSelector((state: RootState) => state.quizzes.results);
     const router = useRouter();
@@ -56,7 +71,9 @@ export default function QuizQuestion({ dto, handle }: Props) {
     console.log("keys", keys);
     console.log("questionKey", questionKey);
 
-    const handleAnswerClick = (selectedOption: OptionQuery) => {
+    const Component = TYPE_TO_SCREEN.get(type) ?? UnknownScreen;
+
+    const handleSubmit = (selectedOption: OptionQuery) => {
         const dao = new StoreDAO(store);
         dao.answerQuestion(handle, question.getId(), [selectedOption.getId()]);
 
@@ -77,18 +94,10 @@ export default function QuizQuestion({ dto, handle }: Props) {
     };
 
     return (
-        <div>
-            <h2>{title}</h2>
-            <p>Question type: {type}</p>
-            <ul>
-                {options.map((option: OptionQuery) => (
-                    <li key={option.getId()}>
-                        <button onClick={() => handleAnswerClick(option)}>
-                            {option.getTitle()}
-                        </button>
-                    </li>
-                ))}
-            </ul>
-        </div>
+        <Component
+            question={question}
+            keys={keys}
+            submitAnswer={handleSubmit}
+        />
     );
 }

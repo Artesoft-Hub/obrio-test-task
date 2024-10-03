@@ -3,8 +3,9 @@ import { QuestionType } from "@/domain/model/question.dto";
 export const mockData = [
     {
         id: "test-1",
-        title: "Personality Quiz",
-        description: "Find out what kind of learner you are.",
+        title: "Cover all use-cases",
+        description:
+            "Includes branching, different types, conditional logic in titles",
         questions: [
             {
                 id: "q1",
@@ -124,19 +125,68 @@ export const mockData = [
                         id: "a10",
                         title: "Yes, I can !",
                         value: true,
-                        nextQuestion: "q7",
+                        nextQuestion: "info_1",
                     },
                     {
                         id: "a11",
                         title: "Unfortunattely not",
                         value: false,
+                        nextQuestion: "info_2",
+                    },
+                ],
+            },
+            {
+                id: "info_1",
+                title: "So how does it work?",
+                description:
+                    "We analyze hundreds of data points to create your unique astrological blueprint. This is combined with AI to tailor-make your astrological insights, based on your answers. We’re going to change your relationship with astrology.",
+                type: QuestionType.Info,
+                options: [
+                    {
+                        id: "a12",
+                        title: "Next",
+                        value: "Next",
                         nextQuestion: "q7",
                     },
                 ],
             },
             {
+                id: "info_2",
+                title: "So how does it work?",
+                description:
+                    "We analyze hundreds of data points to create your unique astrological blueprint. This is combined with AI to tailor-make your astrological insights, based on your answers. We’re going to change your relationship with astrology.",
+                type: QuestionType.Info,
+                options: [
+                    {
+                        id: "a12",
+                        title: "Next",
+                        value: "Next",
+                        nextQuestion: "q8",
+                    },
+                ],
+            },
+            {
                 id: "q7",
-                title: "Are you happy. You like {{fav_book}} {and can do a backflipp (can_do_backflip)}",
+                title: "Route with truthy answer before info. You like {{fav_book}} {and can do a backflipp (can_do_backflip)}",
+                type: QuestionType.SingleSelect,
+                options: [
+                    {
+                        id: "a13",
+                        title: "Yes !",
+                        value: true,
+                        nextQuestion: null,
+                    },
+                    {
+                        id: "a14",
+                        title: "Later",
+                        value: false,
+                        nextQuestion: null,
+                    },
+                ],
+            },
+            {
+                id: "q8",
+                title: "Route with falsy answer before info. You like {{fav_book}} {and can do a backflipp (can_do_backflip)}",
                 type: QuestionType.SingleSelect,
                 options: [
                     {
