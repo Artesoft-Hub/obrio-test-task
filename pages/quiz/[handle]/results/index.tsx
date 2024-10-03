@@ -1,5 +1,6 @@
 import { NextApiAdapter } from "@/data/adapters/nextApi.adapter";
 import { RootState } from "@/data/store/store";
+import { QuestionType } from "@/domain/model/question.dto";
 import { QuizDTO } from "@/domain/model/quiz.dto";
 import { Question } from "@/domain/queries/Question";
 import { GetStaticPaths, GetStaticProps } from "next";
@@ -50,6 +51,10 @@ const QuizResults = ({ dto }: Props) => {
                         const questionDTO = dto.questions.find(
                             (question) => question.id === questionId
                         )!;
+
+                        if(questionDTO.type === QuestionType.Info) {
+                            return;
+                        }
 
                         const question = new Question(questionDTO);
                         const answer = questionDTO?.options
