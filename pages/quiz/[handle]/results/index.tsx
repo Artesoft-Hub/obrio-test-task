@@ -1,6 +1,7 @@
 import { NextApiAdapter } from "@/data/adapters/nextApi.adapter";
 import { RootState } from "@/data/store/store";
 import { QuizDTO } from "@/domain/model/quiz.dto";
+import { Question } from "@/domain/queries/Question";
 import { GetStaticPaths, GetStaticProps } from "next";
 import React from "react";
 import { useSelector } from "react-redux";
@@ -37,24 +38,28 @@ const QuizResults = ({ dto }: Props) => {
     const results = useSelector(
         (state: RootState) => state.quizzes.results[dto.id]
     );
-    console.log(results?.answers);
+
+    const keys = results?.keys;
+
     return (
         <div>
             <h1>Quiz Results</h1>
             <ul>
                 {results &&
                     results.answers.map(({ questionId, optionIds }) => {
-                        const question = dto.questions.find(
+                        const questionDTO = dto.questions.find(
                             (question) => question.id === questionId
-                        );
-                        const answer = question?.options
+                        )!;
+
+                        const question = new Question(questionDTO);
+                        const answer = questionDTO?.options
                             .filter((option) => optionIds.includes(option.id))
-                            .map(dto => dto.title)
+                            .map((dto) => dto.title)
                             .join(", ");
 
                         return (
                             <li key={questionId}>
-                                {question?.title} - {answer}
+                                {question?.getTitle(keys)} - {answer}
                             </li>
                         );
                     })}

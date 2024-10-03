@@ -10,8 +10,12 @@ export class Question implements QuestionQuery {
         return this.dto.id;
     }
 
-    getTitle(): string {
-        return this.dto.title;
+    getTitle(keys: { [key: string]: any }): string {
+        if (!keys) {
+            return this.dto.title;
+        }
+
+        return this.mapKeysToTitle(this.dto.title, keys);
     }
 
     getType(): QuestionType {
@@ -20,5 +24,24 @@ export class Question implements QuestionQuery {
 
     getOptions(): OptionQuery[] {
         return this.dto.options.map((dto) => new Option(dto));
+    }
+
+    getStoredKey(): string | undefined {
+        return this.dto.store_key;
+    }
+
+    private mapKeysToTitle(
+        title: string,
+        keys: { [key: string]: any }
+    ): string {
+        return (
+            title
+                // Replace placeholders keys like {{key}}
+                .replace(/{{(.*?)}}/g, (_, key) => keys[key.trim()] || "")
+                // Handle conditional logic {text (condition)}
+                .replace(/\{(.*?)\((.*?)\)\}/g, (_, text, condition) =>
+                    keys[condition.trim()] ? text : ""
+                )
+        );
     }
 }

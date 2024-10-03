@@ -9,4 +9,5 @@ export interface QuestionDTO {
     title: string;
     type: QuestionType;
     options: OptionDTO[];
+    store_key?: string;
 }

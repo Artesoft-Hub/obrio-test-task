@@ -6,4 +6,5 @@ export interface StoreDAO {
         questionId: string,
         options: string[]
     ) => void;
+    setKey: (quizId: string, key: string, value: any) => void;
 }

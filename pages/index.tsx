@@ -19,7 +19,6 @@ export const getStaticProps: GetStaticProps<Props> = wrapper.getStaticProps(
 );
 
 export default function Home({ quizDTOs }: Props) {
-    console.log(quizDTOs);
     const quizzes = quizDTOs?.map((dto) => new Quiz(dto));
 
     return (

@@ -1,11 +1,12 @@
 import { NextApiAdapter } from "@/data/adapters/nextApi.adapter";
-import { store } from "@/data/store/store";
+import { RootState, store } from "@/data/store/store";
 import { StoreDAO } from "@/data/store/store.dao";
 import { OptionQuery } from "@/domain/model/option.query";
 import { QuestionDTO } from "@/domain/model/question.dto";
 import { Question } from "@/domain/queries/Question";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
 
 type Props = {
     handle: string;
@@ -20,8 +21,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
             params: { handle: quiz.id, question: dto.id },
         }))
     );
-
-    console.log("PATHS !!!", paths);
 
     return { paths, fallback: false };
 };
@@ -44,18 +43,28 @@ export const getStaticProps: GetStaticProps<
 };
 
 export default function QuizQuestion({ dto, handle }: Props) {
+    const results = useSelector((state: RootState) => state.quizzes.results);
+    const router = useRouter();
+
     const question = new Question(dto);
-    const title = question.getTitle();
+    const keys = results[handle]?.keys;
+    const title = question.getTitle(keys);
     const type = question.getType();
     const options = question.getOptions();
-    const router = useRouter();
+    const questionKey = question.getStoredKey();
+
+    console.log("keys", keys);
+    console.log("questionKey", questionKey);
 
     const handleAnswerClick = (selectedOption: OptionQuery) => {
         const dao = new StoreDAO(store);
         dao.answerQuestion(handle, question.getId(), [selectedOption.getId()]);
 
+        if (questionKey) {
+            dao.setKey(handle, questionKey, selectedOption.getValue());
+        }
+
         const isLast = selectedOption.isLast();
-        console.log("selectedOption", selectedOption);
 
         if (isLast) {
             dao.finishQuiz(handle);

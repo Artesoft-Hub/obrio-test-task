@@ -12,6 +12,10 @@ export class Option implements OptionQuery {
         return this.dto.title;
     }
 
+    getValue(): any {
+        return this.dto.value;
+    }
+
     isLast(): boolean {
         return !this.dto.nextQuestion;
     }
