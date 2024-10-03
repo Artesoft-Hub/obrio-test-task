@@ -1,6 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { QuizDTO } from "@/domain/model/quiz.dto";
+import { createSlice } from "@reduxjs/toolkit";
 import { createWrapper, HYDRATE } from "next-redux-wrapper";
 
 interface QuizResult {

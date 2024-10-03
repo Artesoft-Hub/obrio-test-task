@@ -1,11 +1,7 @@
-import { AddQuiz } from "@/components/AddQuiz";
 import { QuizCard } from "@/components/QuizCard";
-import { getAllQuizes, setAllQuizes, setCurrent } from "@/data/commands";
 import { GetStaticProps } from "next";
 import { QuizDTO } from "@/domain/model/quiz.dto";
-import { useSelector } from "react-redux";
-import { RootState, wrapper } from "@/data/store/store";
-import { StoreDAO } from "@/data/store/store.dao";
+import { wrapper } from "@/data/store/store";
 import { NextApiAdapter } from "@/data/adapters/nextApi.adapter";
 import { Quiz } from "@/domain/queries/Quiz";
 

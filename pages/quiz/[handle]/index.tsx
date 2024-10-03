@@ -4,10 +4,9 @@ import { StoreDAO } from "@/data/store/store.dao";
 import { QuizDTO } from "@/domain/model/quiz.dto";
 import { Quiz } from "@/domain/queries/Quiz";
 import { GetStaticPaths, GetStaticProps } from "next";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
-import { useSelector, useStore } from "react-redux";
+import { useSelector } from "react-redux";
 
 type Props = {
     dto: QuizDTO;
