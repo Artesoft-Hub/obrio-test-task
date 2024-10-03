@@ -1,4 +1,6 @@
+import { QuizDTO } from "./quiz.dto";
+
 export interface DatabaseAdapter {
-    getAllQuizes: () => Promise<any[]>;
-    // getQuizByID: (id: string) => Promise<any[]>;
+    getAllQuizes: () => Promise<QuizDTO[]>;
+    getQuizByID: (id: string) => Promise<QuizDTO>;
 }

@@ -7,39 +7,28 @@ import { useSelector } from "react-redux";
 import { RootState, wrapper } from "@/data/store/store";
 import { StoreDAO } from "@/data/store/store.dao";
 import { NextApiAdapter } from "@/data/adapters/nextApi.adapter";
+import { Quiz } from "@/domain/queries/Quiz";
 
 type Props = {
-    quizzes: QuizDTO[];
+    quizDTOs: QuizDTO[];
 };
 
 export const getStaticProps: GetStaticProps<Props> = wrapper.getStaticProps(
-    (store) => async () => {
+    () => async () => {
         const adapter = new NextApiAdapter();
-        const storeDAO = new StoreDAO(store, adapter);
+        const quizDTOs = await adapter.getAllQuizes();
 
-        await storeDAO.setQuizzes();
-
-        // await setQuizList(storeDAO)();
-        // const quizzes = getQuizList(storeDAO)();
-        const quizzes = storeDAO.getQuizzes();
-
-        setCurrent("testishe");
-
-        return { props: { quizzes } };
+        return { props: { quizDTOs } };
     }
 );
 
-export default function Home({ quizzes }: Props) {
-    const current = useSelector((state: RootState) => state.quizzes.current);
-    console.log("CURRENT", current)
-    const handleClick = () => {
-        setCurrent("test-1");
-    };
+export default function Home({ quizDTOs }: Props) {
+    console.log(quizDTOs);
+    const quizzes = quizDTOs?.map((dto) => new Quiz(dto));
 
     return (
         <>
             <h1>Take a quiz</h1>
-            Current state: {current}
             <div
                 style={{
                     display: "flex",
@@ -48,10 +37,8 @@ export default function Home({ quizzes }: Props) {
                     gap: 20,
                 }}
             >
-                <AddQuiz />
-                <button onClick={handleClick}>Test send command</button>
-                {quizzes?.map((quiz: any) => (
-                    <QuizCard key={quiz.id} {...quiz} />
+                {quizzes?.map((quiz: Quiz) => (
+                    <QuizCard key={quiz.getId()} quiz={quiz} />
                 ))}
             </div>
         </>

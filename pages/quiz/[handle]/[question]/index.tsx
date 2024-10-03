@@ -1,66 +1,75 @@
+import { NextApiAdapter } from "@/data/adapters/nextApi.adapter";
+import { OptionQuery } from "@/domain/model/option.query";
+import { QuestionDTO } from "@/domain/model/question.dto";
+import { Question } from "@/domain/queries/Question";
+import { GetStaticPaths, GetStaticProps } from "next";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
 
-const quizData: any = {
-    title: "Personality Quiz",
-    questions: {
-        q1: {
-            text: "What do you enjoy the most?",
-            options: [
-                { id: "a1", text: "Reading books", next: "q2" },
-                { id: "a2", text: "Watching videos", next: "q3" },
-                {
-                    id: "a3",
-                    text: "Hands-on activities",
-                    next: "q4",
-                },
-            ],
-        },
-        q2: {
-            text: "What type of books do you prefer?",
-            options: [
-                { id: "a4", text: "Fiction", next: "q5" },
-                { id: "a5", text: "Non-fiction", next: "q5" },
-            ],
-        },
-    },
+type Props = {
+    handle: string;
+    dto: QuestionDTO;
 };
 
-export default function QuizQuestion() {
+export const getStaticPaths: GetStaticPaths = async () => {
+    const adapter = new NextApiAdapter();
+    const quizDTOs = await adapter.getAllQuizes();
+    const paths = quizDTOs.flatMap((quiz) =>
+        quiz.questions.map((dto) => ({
+            params: { handle: quiz.id, question: dto.id },
+        }))
+    );
+
+    console.log("PATHS !!!", paths);
+
+    return { paths, fallback: false };
+};
+
+export const getStaticProps: GetStaticProps<
+    Props,
+    { handle: string; question: string }
+> = async (context) => {
+    const { handle, question } = context.params!;
+    console.log("context.params", handle, question);
+    const adapter = new NextApiAdapter();
+    const quiz = await adapter.getQuizByID(handle);
+    const dto = quiz.questions.find(
+        (questionDTO) => questionDTO.id === question
+    )!;
+
+    return {
+        props: { handle, dto },
+    };
+};
+
+export default function QuizQuestion({ dto, handle }: Props) {
+    const question = new Question(dto);
+    const title = question.getTitle();
+    const type = question.getType();
+    const options = question.getOptions();
     const router = useRouter();
-    const { handle, question } = router.query;
 
-    const [questionData, setQuestionData] = useState<any>(null);
+    const handleAnswerClick = (selectedOption: OptionQuery) => {
+        const isLast = selectedOption.isLast();
+        console.log("selectedOption", selectedOption);
 
-    useEffect(() => {
-        console.log(handle, question);
-
-        if (handle && question) {
-            const questionA = quizData.questions[question as string];
-            setQuestionData(questionA);
+        if (isLast) {
+            return router.push(`/quiz/${handle}/results`);
         }
-    }, [handle, question]);
 
-    if (!questionData) {
-        return <div>Loading...</div>;
-    }
+        const next = selectedOption.getNextQuestionId();
 
-    const handleAnswerClick = (next: string) => {
         router.push(`/quiz/${handle}/${next}`);
     };
 
     return (
         <div>
-            <h1>{questionData.text}</h1>
+            <h2>{title}</h2>
+            <p>Question type: {type}</p>
             <ul>
-                {questionData.options.map((option: any) => (
-                    <li key={option.id}>
-                        <button
-                            onClick={() =>
-                                handleAnswerClick(option.next)
-                            }
-                        >
-                            {option.text}
+                {options.map((option: OptionQuery) => (
+                    <li key={option.getId()}>
+                        <button onClick={() => handleAnswerClick(option)}>
+                            {option.getTitle()}
                         </button>
                     </li>
                 ))}

@@ -1,13 +1,16 @@
+import { Quiz } from "@/domain/queries/Quiz";
 import Link from "next/link";
 import React from "react";
 
 type Props = {
-    id: string;
-    title: string;
-    description: string;
+    quiz: Quiz;
 };
 
-export const QuizCard = ({ id, title, description }: Props) => {
+export const QuizCard = ({ quiz }: Props) => {
+    const id = quiz.getId();
+    const title = quiz.getTitle();
+    const description = quiz.getDescription();
+
     return (
         <Link href={`quiz/${id}`} style={{ textDecoration: "none" }}>
             <div
