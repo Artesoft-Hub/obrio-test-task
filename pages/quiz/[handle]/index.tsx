@@ -1,10 +1,13 @@
 import { NextApiAdapter } from "@/data/adapters/nextApi.adapter";
+import { store } from "@/data/store/store";
+import { StoreDAO } from "@/data/store/store.dao";
 import { QuizDTO } from "@/domain/model/quiz.dto";
 import { Quiz } from "@/domain/queries/Quiz";
 import { GetStaticPaths, GetStaticProps } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
+import { useStore } from "react-redux";
 
 type Props = {
     dto: QuizDTO;
@@ -43,14 +46,17 @@ const QuizWelcomeScreen = ({ dto }: Props) => {
     const description = quiz.getDescription();
     const firstQuestionID = quiz.getFirstQuestion().getId();
 
+    const handleClick = () => {
+        const dao = new StoreDAO(store);
+        dao.startQuiz(quiz.getId());
+        router.push(`/quiz/${handle}/${firstQuestionID}`);
+    };
+
     return (
         <div>
             <h2>{title}</h2>
             <p>{description}</p>
-            Navigate to the{" "}
-            <Link href={`/quiz/${handle}/${firstQuestionID}`}>
-                first question
-            </Link>
+            <button onClick={handleClick}>Start quiz</button>
         </div>
     );
 };

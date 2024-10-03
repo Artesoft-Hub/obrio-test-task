@@ -1,4 +1,6 @@
 import { NextApiAdapter } from "@/data/adapters/nextApi.adapter";
+import { store } from "@/data/store/store";
+import { StoreDAO } from "@/data/store/store.dao";
 import { OptionQuery } from "@/domain/model/option.query";
 import { QuestionDTO } from "@/domain/model/question.dto";
 import { Question } from "@/domain/queries/Question";
@@ -29,7 +31,7 @@ export const getStaticProps: GetStaticProps<
     { handle: string; question: string }
 > = async (context) => {
     const { handle, question } = context.params!;
-    console.log("context.params", handle, question);
+
     const adapter = new NextApiAdapter();
     const quiz = await adapter.getQuizByID(handle);
     const dto = quiz.questions.find(
@@ -49,10 +51,14 @@ export default function QuizQuestion({ dto, handle }: Props) {
     const router = useRouter();
 
     const handleAnswerClick = (selectedOption: OptionQuery) => {
+        const dao = new StoreDAO(store);
+        dao.answerQuestion(handle, question.getId(), [selectedOption.getId()]);
+
         const isLast = selectedOption.isLast();
         console.log("selectedOption", selectedOption);
 
         if (isLast) {
+            dao.finishQuiz(handle);
             return router.push(`/quiz/${handle}/results`);
         }
 

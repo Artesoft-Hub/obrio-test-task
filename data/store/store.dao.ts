@@ -1,51 +1,19 @@
 import { Store } from "@reduxjs/toolkit";
 import { StoreDAO as StoreDAOModel } from "@/domain/model/store.dao";
-import { DatabaseAdapter } from "@/domain/model/database.adapter";
-import {
-    setAllQuizzes,
-    setSelectedQuizId,
-    setError,
-    setLoading,
-} from "./store";
-import { QuizDTO } from "@/domain/model/quiz.dto";
+import { answerQuestion, finishQuiz, startQuiz } from "./store";
 
 export class StoreDAO implements StoreDAOModel {
-    constructor(
-        private readonly store: Store,
-        private readonly adapter: DatabaseAdapter
-    ) {}
+    constructor(private readonly store: Store) {}
 
-    async setQuizzes() {
-        this.store.dispatch(setLoading(true));
-
-        try {
-            const quizzes = await this.adapter.getAllQuizes();
-            console.log(quizzes);
-            this.store.dispatch(setAllQuizzes(quizzes));
-        } catch (error: any) {
-            this.store.dispatch(setError(error));
-        } finally {
-            this.store.dispatch(setLoading(false));
-        }
+    startQuiz(quizId: string) {
+        this.store.dispatch(startQuiz({ quizId }));
     }
 
-    setCurrentQuiz(id: string) {
-        this.store.dispatch(setLoading(true));
-
-        try {
-            this.store.dispatch(setSelectedQuizId(id));
-        } catch (error: any) {
-            this.store.dispatch(setError(error));
-        } finally {
-            this.store.dispatch(setLoading(false));
-        }
+    answerQuestion(quizId: string, questionId: string, options: string[]) {
+        this.store.dispatch(answerQuestion({ quizId, questionId, options }));
     }
 
-    getQuizzes(): QuizDTO[] {
-        return this.store.getState().quizzes.list;
-    }
-
-    getCurrentQuiz(): string {
-        return this.store.getState().quizzes.current;
+    finishQuiz(quizId: string) {
+        this.store.dispatch(finishQuiz({ quizId }));
     }
 }

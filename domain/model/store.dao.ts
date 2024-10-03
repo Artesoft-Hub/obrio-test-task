@@ -1,8 +1,9 @@
-import { QuizDTO } from "./quiz.dto";
-
 export interface StoreDAO {
-    setQuizzes: () => void;
-    getQuizzes: () => QuizDTO[];
-    setCurrentQuiz: (id: string) => void;
-    getCurrentQuiz: () => string;
+    startQuiz: (id: string) => void;
+    finishQuiz: (id: string) => void;
+    answerQuestion: (
+        quizId: string,
+        questionId: string,
+        options: string[]
+    ) => void;
 }
