@@ -1,5 +1,4 @@
 import { DatabaseAdapter } from "@/domain/model/database.adapter";
-import { QuestionType } from "@/domain/model/question.dto";
 import { QuizDTO } from "@/domain/model/quiz.dto";
 
 export class NextApiAdapter implements DatabaseAdapter {
