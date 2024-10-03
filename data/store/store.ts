@@ -5,7 +5,7 @@ import { createWrapper, HYDRATE } from "next-redux-wrapper";
 interface QuizResult {
     finished: boolean;
     keys: {
-        [key: string]: any;
+        [key: string]: unknown;
     };
     answers: {
         questionId: string;

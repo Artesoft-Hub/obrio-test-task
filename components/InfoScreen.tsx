@@ -3,7 +3,7 @@ import { QuestionQuery } from "@/domain/model/question.query";
 import React from "react";
 
 type Props = {
-    keys: { [key: string]: any };
+    keys: { [key: string]: unknown };
     question: QuestionQuery;
     submitAnswer: (options: OptionQuery) => void;
 };

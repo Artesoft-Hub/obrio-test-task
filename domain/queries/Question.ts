@@ -10,7 +10,7 @@ export class Question implements QuestionQuery {
         return this.dto.id;
     }
 
-    getTitle(keys: { [key: string]: any }): string {
+    getTitle(keys: { [key: string]: unknown }): string {
         if (!keys) {
             return this.dto.title;
         }

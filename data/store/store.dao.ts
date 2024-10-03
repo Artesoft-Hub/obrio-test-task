@@ -17,7 +17,7 @@ export class StoreDAO implements StoreDAOModel {
         this.store.dispatch(finishQuiz({ quizId }));
     }
 
-    setKey(quizId: string, key: string, value: any) {
+    setKey(quizId: string, key: string, value: unknown) {
         this.store.dispatch(setKey({ quizId, key, value }));
     }
 }

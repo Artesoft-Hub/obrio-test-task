@@ -3,7 +3,7 @@ import { QuestionType } from "./question.dto";
 
 export interface QuestionQuery {
     getId: () => string;
-    getTitle: (keys: { [key: string]: any }) => string;
+    getTitle: (keys: { [key: string]: unknown }) => string;
     getDescription: () => string | undefined;
     getType: () => QuestionType;
     getOptions: () => OptionQuery[];

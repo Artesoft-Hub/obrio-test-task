@@ -1,7 +1,7 @@
 export interface OptionQuery {
     getId: () => string;
     getTitle: () => string;
-    getValue: () => any;
+    getValue: () => unknown;
     getNextQuestionId: () => string | null;
     isLast: () => boolean;
 }

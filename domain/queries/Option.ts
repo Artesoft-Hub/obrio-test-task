@@ -12,7 +12,7 @@ export class Option implements OptionQuery {
         return this.dto.title;
     }
 
-    getValue(): any {
+    getValue(): unknown {
         return this.dto.value;
     }
 

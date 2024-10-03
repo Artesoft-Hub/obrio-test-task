@@ -18,7 +18,7 @@ type Props = {
 };
 
 type ScreenProps = {
-    keys: { [key: string]: any };
+    keys: { [key: string]: unknown };
     question: QuestionQuery;
     submitAnswer: (options: OptionQuery) => void;
 };
@@ -63,13 +63,8 @@ export default function QuizQuestion({ dto, handle }: Props) {
 
     const question = new Question(dto);
     const keys = results[handle]?.keys;
-    const title = question.getTitle(keys);
     const type = question.getType();
-    const options = question.getOptions();
     const questionKey = question.getStoredKey();
-
-    console.log("keys", keys);
-    console.log("questionKey", questionKey);
 
     const Component = TYPE_TO_SCREEN.get(type) ?? UnknownScreen;
 
