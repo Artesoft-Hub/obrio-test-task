@@ -4,6 +4,7 @@ import { QuizDTO } from "@/domain/model/quiz.dto";
 import { wrapper } from "@/data/store/store";
 import { NextApiAdapter } from "@/data/adapters/nextApi.adapter";
 import { Quiz } from "@/domain/queries/Quiz";
+import { getQuiz } from "@/domain/repositories/getQuiz";
 
 type Props = {
     quizDTOs: QuizDTO[];
@@ -19,7 +20,7 @@ export const getStaticProps: GetStaticProps<Props> = wrapper.getStaticProps(
 );
 
 export default function Home({ quizDTOs }: Props) {
-    const quizzes = quizDTOs?.map((dto) => new Quiz(dto));
+    const quizzes = quizDTOs?.map(getQuiz);
 
     return (
         <>

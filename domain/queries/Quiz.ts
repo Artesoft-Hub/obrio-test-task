@@ -25,12 +25,4 @@ export class Quiz implements QuizQuery {
     getQuestions(): QuestionQuery[] {
         return this.dto.questions.map((dto) => new Question(dto));
     }
-
-    getResult(): any {
-        return null;
-    }
-
-    isSubmitted(): boolean {
-        return false;
-    }
 }

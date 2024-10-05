@@ -1,8 +1,8 @@
 import { NextApiAdapter } from "@/data/adapters/nextApi.adapter";
-import { RootState, store } from "@/data/store/store";
-import { StoreDAO } from "@/data/store/store.dao";
+import { startQuiz } from "@/data/commands";
+import { RootState } from "@/data/store/store";
 import { QuizDTO } from "@/domain/model/quiz.dto";
-import { Quiz } from "@/domain/queries/Quiz";
+import { getQuiz } from "@/domain/repositories/getQuiz";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { useRouter } from "next/router";
 import React from "react";
@@ -37,7 +37,7 @@ export const getStaticProps: GetStaticProps<Props, { handle: string }> = async (
 };
 
 const QuizWelcomeScreen = ({ dto }: Props) => {
-    const quiz = new Quiz(dto);
+    const quiz = getQuiz(dto);
     const router = useRouter();
     const { handle } = router.query;
     const results = useSelector((state: RootState) => state.quizzes.results);
@@ -47,8 +47,7 @@ const QuizWelcomeScreen = ({ dto }: Props) => {
     const firstQuestionID = quiz.getFirstQuestion().getId();
 
     const handleStart = () => {
-        const dao = new StoreDAO(store);
-        dao.startQuiz(quiz.getId());
+        startQuiz(quiz.getId());
         router.push(`/quiz/${handle}/${firstQuestionID}`);
     };
 

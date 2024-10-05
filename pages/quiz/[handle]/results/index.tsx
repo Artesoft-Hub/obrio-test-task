@@ -2,7 +2,7 @@ import { NextApiAdapter } from "@/data/adapters/nextApi.adapter";
 import { RootState } from "@/data/store/store";
 import { QuestionType } from "@/domain/model/question.dto";
 import { QuizDTO } from "@/domain/model/quiz.dto";
-import { Question } from "@/domain/queries/Question";
+import { getQuestion } from "@/domain/repositories/getQuestion";
 import { GetStaticPaths, GetStaticProps } from "next";
 import React from "react";
 import { useSelector } from "react-redux";
@@ -56,7 +56,7 @@ const QuizResults = ({ dto }: Props) => {
                             return;
                         }
 
-                        const question = new Question(questionDTO);
+                        const question = getQuestion(questionDTO);
                         const answer = question.getResult(value);
 
                         return (

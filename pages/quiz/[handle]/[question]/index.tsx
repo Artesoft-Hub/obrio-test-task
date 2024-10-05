@@ -3,12 +3,12 @@ import SingleSelectQuestion from "@/components/OptionSelectQuestion";
 import TextInputQuestion from "@/components/TextInputQuestion";
 import UnknownScreen from "@/components/UnknownScreen";
 import { NextApiAdapter } from "@/data/adapters/nextApi.adapter";
-import { RootState, store } from "@/data/store/store";
-import { StoreDAO } from "@/data/store/store.dao";
+import { answerQuestion, finishQuiz, setQuestionKey } from "@/data/commands";
+import { RootState } from "@/data/store/store";
 import { OptionQuery } from "@/domain/model/option.query";
 import { QuestionDTO, QuestionType } from "@/domain/model/question.dto";
 import { QuestionQuery } from "@/domain/model/question.query";
-import { Question } from "@/domain/queries/Question";
+import { getQuestion } from "@/domain/repositories/getQuestion";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
@@ -63,7 +63,7 @@ export default function QuizQuestion({ dto, handle }: Props) {
     const results = useSelector((state: RootState) => state.quizzes.results);
     const router = useRouter();
 
-    const question = new Question(dto);
+    const question = getQuestion(dto);
     const keys = results[handle]?.keys;
     const type = question.getType();
     const questionKey = question.getStoredKey();
@@ -74,19 +74,18 @@ export default function QuizQuestion({ dto, handle }: Props) {
         selectedOption: OptionQuery,
         customValue?: unknown
     ) => {
-        const dao = new StoreDAO(store);
         const answer = customValue ?? selectedOption.getValue();
 
-        dao.answerQuestion(handle, question.getId(), answer);
+        answerQuestion(handle, question.getId(), answer);
 
         if (questionKey) {
-            dao.setKey(handle, questionKey, answer);
+            setQuestionKey(handle, questionKey, answer);
         }
 
         const isLast = selectedOption.isLast();
 
         if (isLast) {
-            dao.finishQuiz(handle);
+            finishQuiz(handle);
             return router.push(`/quiz/${handle}/results`);
         }
 

@@ -57,7 +57,7 @@ const mockData = [
             {
                 id: "q55",
                 title: "What is your name?",
-                store_key: "fav_book",
+                store_key: "name",
                 type: QuestionType.TextInput,
                 options: [
                     {

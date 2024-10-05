@@ -1,15 +1,14 @@
-// import { setQuizList } from "@/domain/commands/setQuizList";
-// import { getQuizList } from "@/domain/commands/getQuizList";
-// import { NextApiAdapter } from "./adapters/nextApi.adapter";
-// import { store } from "./store/store";
-// import { StoreDAO } from "./store/store.dao";
-// // import { getCurrentQuiz } from "@/domain/commands/getCurrentQuiz";
-// // import { setCurrentQuiz } from "@/domain/commands/setCurrentQuiz";
+import { store } from "./store/store";
+import { StoreDAO } from "./store/store.dao";
 
-// const database = new NextApiAdapter();
-// const storeDAO = new StoreDAO(store);
+import { startQuiz as startQuizCommand } from "@/domain/commands/startQuiz";
+import { finishQuiz as finishQuizCommand } from "@/domain/commands/finishQuiz";
+import { answerQuestion as answerQuestionCommand } from "@/domain/commands/answerQuestion";
+import { setQuestionKey as setQuestionKeyCommand } from "@/domain/commands/setQuestionKey";
 
-// export const setAllQuizes = setQuizList(storeDAO);
-// export const getAllQuizes = getQuizList(storeDAO);
-// export const setCurrent = setCurrentQuiz(storeDAO);
-// export const getCurrent = getCurrentQuiz(storeDAO);
+const storeDAO = new StoreDAO(store);
+
+export const startQuiz = startQuizCommand(storeDAO);
+export const finishQuiz = finishQuizCommand(storeDAO);
+export const answerQuestion = answerQuestionCommand(storeDAO);
+export const setQuestionKey = setQuestionKeyCommand(storeDAO);
