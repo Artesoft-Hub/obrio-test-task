@@ -47,20 +47,17 @@ const QuizResults = ({ dto }: Props) => {
             <h1>Quiz Results</h1>
             <ul>
                 {results &&
-                    results.answers.map(({ questionId, optionIds }) => {
+                    results.answers.map(({ questionId, value }) => {
                         const questionDTO = dto.questions.find(
                             (question) => question.id === questionId
                         )!;
 
-                        if(questionDTO.type === QuestionType.Info) {
+                        if (questionDTO.type === QuestionType.Info) {
                             return;
                         }
 
                         const question = new Question(questionDTO);
-                        const answer = questionDTO?.options
-                            .filter((option) => optionIds.includes(option.id))
-                            .map((dto) => dto.title)
-                            .join(", ");
+                        const answer = question.getResult(value);
 
                         return (
                             <li key={questionId}>

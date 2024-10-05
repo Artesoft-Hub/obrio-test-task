@@ -2,7 +2,8 @@ import { OptionDTO } from "./option.dto";
 
 export enum QuestionType {
     Info = "info",
-    SingleSelect = "single-choice",
+    TextInput = "text-input",
+    OptionSelect = "option-select",
 }
 
 export interface QuestionDTO {

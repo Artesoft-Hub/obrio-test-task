@@ -9,8 +9,8 @@ export class StoreDAO implements StoreDAOModel {
         this.store.dispatch(startQuiz({ quizId }));
     }
 
-    answerQuestion(quizId: string, questionId: string, options: string[]) {
-        this.store.dispatch(answerQuestion({ quizId, questionId, options }));
+    answerQuestion(quizId: string, questionId: string, value: any) {
+        this.store.dispatch(answerQuestion({ quizId, questionId, value }));
     }
 
     finishQuiz(quizId: string) {

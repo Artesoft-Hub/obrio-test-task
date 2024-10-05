@@ -1,6 +1,6 @@
 import { OptionQuery } from "@/domain/model/option.query";
 import { QuestionQuery } from "@/domain/model/question.query";
-import React from "react";
+import React, { useState } from "react";
 
 type Props = {
     keys: { [key: string]: unknown };
@@ -8,20 +8,28 @@ type Props = {
     submitAnswer: (option: OptionQuery, customValue?: unknown) => void;
 };
 
-const InfoScreen = ({ question, keys, submitAnswer }: Props) => {
+const TextInputQuestion = ({ question, keys, submitAnswer }: Props) => {
+    const [value, setValue] = useState("");
     const title = question.getTitle(keys);
-    const description = question.getDescription();
     const options = question.getOptions();
+
+    const handleSubmit = (option: OptionQuery) => {
+        submitAnswer(option, value);
+    };
 
     return (
         <div>
             <h2>{title}</h2>
-            <p>Hello from info screen</p>
-            <p>{description}</p>
+            <p>Hello from text input</p>
+            <input
+                type="text"
+                value={value}
+                onChange={(e) => setValue(e.target.value)}
+            />
             <ul>
                 {options.map((option: OptionQuery) => (
                     <li key={option.getId()}>
-                        <button onClick={() => submitAnswer(option)}>
+                        <button onClick={() => handleSubmit(option)}>
                             {option.getTitle()}
                         </button>
                     </li>
@@ -31,4 +39,4 @@ const InfoScreen = ({ question, keys, submitAnswer }: Props) => {
     );
 };
 
-export default InfoScreen;
+export default TextInputQuestion;

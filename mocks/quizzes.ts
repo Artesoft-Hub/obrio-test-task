@@ -10,7 +10,7 @@ export const mockData = [
             {
                 id: "q1",
                 title: "What do you enjoy the most?",
-                type: QuestionType.SingleSelect,
+                type: QuestionType.OptionSelect,
                 options: [
                     {
                         id: "a1",
@@ -36,7 +36,7 @@ export const mockData = [
                 id: "q2",
                 title: "What type of books do you prefer?",
                 store_key: "fav_book",
-                type: QuestionType.SingleSelect,
+                type: QuestionType.OptionSelect,
                 options: [
                     {
                         id: "a4",
@@ -55,7 +55,7 @@ export const mockData = [
             {
                 id: "q3",
                 title: "What type of videos do you enjoy?",
-                type: QuestionType.SingleSelect,
+                type: QuestionType.OptionSelect,
                 options: [
                     {
                         id: "a6",
@@ -74,7 +74,7 @@ export const mockData = [
             {
                 id: "q4",
                 title: "What kind of hands-on activities do you prefer?",
-                type: QuestionType.SingleSelect,
+                type: QuestionType.OptionSelect,
                 options: [
                     {
                         id: "a8",
@@ -93,7 +93,7 @@ export const mockData = [
             {
                 id: "q5",
                 title: "How do you prefer to learn? Previously you selected {{fav_book}}",
-                type: QuestionType.SingleSelect,
+                type: QuestionType.OptionSelect,
                 options: [
                     {
                         id: "a10",
@@ -118,7 +118,7 @@ export const mockData = [
             {
                 id: "q6",
                 title: "Can you do a back flip ?",
-                type: QuestionType.SingleSelect,
+                type: QuestionType.OptionSelect,
                 store_key: "can_do_backflip",
                 options: [
                     {
@@ -168,7 +168,7 @@ export const mockData = [
             {
                 id: "q7",
                 title: "Route with truthy answer before info. You like {{fav_book}} {and can do a backflipp (can_do_backflip)}",
-                type: QuestionType.SingleSelect,
+                type: QuestionType.OptionSelect,
                 options: [
                     {
                         id: "a13",
@@ -187,7 +187,7 @@ export const mockData = [
             {
                 id: "q8",
                 title: "Route with falsy answer before info. You like {{fav_book}} {and can do a backflipp (can_do_backflip)}",
-                type: QuestionType.SingleSelect,
+                type: QuestionType.OptionSelect,
                 options: [
                     {
                         id: "a10",
@@ -214,7 +214,7 @@ export const mockData = [
             {
                 id: "q1",
                 title: "What do you enjoy the most?",
-                type: QuestionType.SingleSelect,
+                type: QuestionType.OptionSelect,
                 options: [
                     {
                         id: "a1",
@@ -240,7 +240,7 @@ export const mockData = [
                 id: "q2",
                 title: "What type of books do you prefer?",
                 store_key: "fav_book",
-                type: QuestionType.SingleSelect,
+                type: QuestionType.OptionSelect,
                 options: [
                     {
                         id: "a4",
@@ -259,7 +259,7 @@ export const mockData = [
             {
                 id: "q3",
                 title: "What type of videos do you enjoy?",
-                type: QuestionType.SingleSelect,
+                type: QuestionType.OptionSelect,
                 options: [
                     {
                         id: "a6",
@@ -278,7 +278,7 @@ export const mockData = [
             {
                 id: "q4",
                 title: "What kind of hands-on activities do you prefer?",
-                type: QuestionType.SingleSelect,
+                type: QuestionType.OptionSelect,
                 options: [
                     {
                         id: "a8",
@@ -297,7 +297,7 @@ export const mockData = [
             {
                 id: "q5",
                 title: "How do you prefer to learn? Previously you selected {{fav_book}}",
-                type: QuestionType.SingleSelect,
+                type: QuestionType.OptionSelect,
                 options: [
                     {
                         id: "a10",
@@ -322,7 +322,7 @@ export const mockData = [
             {
                 id: "q6",
                 title: "Can you do a back flip ?",
-                type: QuestionType.SingleSelect,
+                type: QuestionType.OptionSelect,
                 store_key: "can_do_backflip",
                 options: [
                     {
@@ -372,7 +372,7 @@ export const mockData = [
             {
                 id: "q7",
                 title: "Route with truthy answer before info. You like {{fav_book}} {and can do a backflipp (can_do_backflip)}",
-                type: QuestionType.SingleSelect,
+                type: QuestionType.OptionSelect,
                 options: [
                     {
                         id: "a13",
@@ -391,7 +391,7 @@ export const mockData = [
             {
                 id: "q8",
                 title: "Route with falsy answer before info. You like {{fav_book}} {and can do a backflipp (can_do_backflip)}",
-                type: QuestionType.SingleSelect,
+                type: QuestionType.OptionSelect,
                 options: [
                     {
                         id: "a10",

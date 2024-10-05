@@ -8,4 +8,5 @@ export interface QuestionQuery {
     getType: () => QuestionType;
     getOptions: () => OptionQuery[];
     getStoredKey: () => string | undefined;
+    getResult: (value: any) => string;
 }

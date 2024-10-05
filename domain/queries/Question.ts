@@ -34,6 +34,26 @@ export class Question implements QuestionQuery {
         return this.dto.store_key;
     }
 
+    getResult(value: any): string {
+        if (this.dto.type !== QuestionType.OptionSelect) {
+            return this.getCustomResult(value);
+        }
+
+        return this.getOptionResult(value);
+    }
+
+    private getCustomResult(data: any): string {
+        return typeof data === "object" ? data.toString() : data;
+    }
+
+    private getOptionResult(data: any): string {
+        const selectedOption = this.dto.options.find(
+            (option) => option.value === data
+        )!;
+
+        return selectedOption.title;
+    }
+
     private mapKeysToTitle(
         title: string,
         keys: { [key: string]: any }

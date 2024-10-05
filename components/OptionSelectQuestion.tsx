@@ -5,7 +5,7 @@ import React from "react";
 type Props = {
     keys: { [key: string]: unknown };
     question: QuestionQuery;
-    submitAnswer: (options: OptionQuery) => void;
+    submitAnswer: (option: OptionQuery, customValue?: unknown) => void;
 };
 
 const SingleSelectQuestion = ({ question, keys, submitAnswer }: Props) => {

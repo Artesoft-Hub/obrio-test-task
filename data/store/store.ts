@@ -9,7 +9,7 @@ interface QuizResult {
     };
     answers: {
         questionId: string;
-        optionIds: string[];
+        value: any;
     }[];
 }
 
@@ -45,10 +45,10 @@ const quizSlice = createSlice({
         },
 
         answerQuestion: (state, action) => {
-            const { quizId, questionId, options } = action.payload;
+            const { quizId, questionId, value } = action.payload;
             state.results[quizId].answers.push({
                 questionId,
-                optionIds: options,
+                value,
             });
         },
         setKey: (state, action) => {

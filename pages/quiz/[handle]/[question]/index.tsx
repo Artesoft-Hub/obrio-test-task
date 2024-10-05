@@ -1,5 +1,6 @@
 import InfoScreen from "@/components/InfoScreen";
-import SingleSelectQuestion from "@/components/SingleSelectQuestion";
+import SingleSelectQuestion from "@/components/OptionSelectQuestion";
+import TextInputQuestion from "@/components/TextInputQuestion";
 import UnknownScreen from "@/components/UnknownScreen";
 import { NextApiAdapter } from "@/data/adapters/nextApi.adapter";
 import { RootState, store } from "@/data/store/store";
@@ -20,7 +21,7 @@ type Props = {
 type ScreenProps = {
     keys: { [key: string]: unknown };
     question: QuestionQuery;
-    submitAnswer: (options: OptionQuery) => void;
+    submitAnswer: (option: OptionQuery, customValue?: unknown) => void;
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -54,7 +55,8 @@ export const getStaticProps: GetStaticProps<
 
 const TYPE_TO_SCREEN = new Map<QuestionType, React.FC<ScreenProps>>([
     [QuestionType.Info, InfoScreen],
-    [QuestionType.SingleSelect, SingleSelectQuestion],
+    [QuestionType.OptionSelect, SingleSelectQuestion],
+    [QuestionType.TextInput, TextInputQuestion],
 ]);
 
 export default function QuizQuestion({ dto, handle }: Props) {
@@ -68,12 +70,17 @@ export default function QuizQuestion({ dto, handle }: Props) {
 
     const Component = TYPE_TO_SCREEN.get(type) ?? UnknownScreen;
 
-    const handleSubmit = (selectedOption: OptionQuery) => {
+    const handleSubmit = (
+        selectedOption: OptionQuery,
+        customValue?: unknown
+    ) => {
         const dao = new StoreDAO(store);
-        dao.answerQuestion(handle, question.getId(), [selectedOption.getId()]);
+        const answer = customValue ?? selectedOption.getValue();
+
+        dao.answerQuestion(handle, question.getId(), answer);
 
         if (questionKey) {
-            dao.setKey(handle, questionKey, selectedOption.getValue());
+            dao.setKey(handle, questionKey, answer);
         }
 
         const isLast = selectedOption.isLast();
