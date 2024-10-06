@@ -1,6 +1,7 @@
 import { Store } from "@reduxjs/toolkit";
 import { StoreDAO as StoreDAOModel } from "@/domain/model/store.dao";
 import { answerQuestion, finishQuiz, startQuiz, setKey } from "./store";
+import { ValidValue } from "@/domain/model/option.dto";
 
 export class StoreDAO implements StoreDAOModel {
     constructor(private readonly store: Store) {}
@@ -17,7 +18,7 @@ export class StoreDAO implements StoreDAOModel {
         this.store.dispatch(finishQuiz({ quizId }));
     }
 
-    setKey(quizId: string, key: string, value: unknown) {
+    setKey(quizId: string, key: string, value: ValidValue) {
         this.store.dispatch(setKey({ quizId, key, value }));
     }
 }

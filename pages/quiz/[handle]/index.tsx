@@ -1,7 +1,7 @@
 import { NextApiAdapter } from "@/data/adapters/nextApi.adapter";
 import { startQuiz } from "@/data/commands";
-import { RootState } from "@/data/store/store";
 import { QuizDTO } from "@/domain/model/quiz.dto";
+import { RootState } from "@/domain/model/store.dao";
 import { getQuiz } from "@/domain/repositories/getQuiz";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { useRouter } from "next/router";

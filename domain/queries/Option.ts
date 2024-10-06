@@ -1,4 +1,4 @@
-import { OptionDTO } from "../model/option.dto";
+import { OptionDTO, ValidValue } from "../model/option.dto";
 import { OptionQuery } from "../model/option.query";
 
 export class Option implements OptionQuery {
@@ -12,7 +12,7 @@ export class Option implements OptionQuery {
         return this.dto.title;
     }
 
-    getValue(): unknown {
+    getValue(): ValidValue | undefined {
         return this.dto.value;
     }
 

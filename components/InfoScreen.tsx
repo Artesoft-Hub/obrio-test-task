@@ -1,11 +1,12 @@
+import { ValidValue } from "@/domain/model/option.dto";
 import { OptionQuery } from "@/domain/model/option.query";
 import { QuestionQuery } from "@/domain/model/question.query";
 import React from "react";
 
 type Props = {
-    keys: { [key: string]: unknown };
+    keys: { [key: string]: ValidValue };
     question: QuestionQuery;
-    submitAnswer: (option: OptionQuery, customValue?: unknown) => void;
+    submitAnswer: (option: OptionQuery, customValue?: ValidValue) => void;
 };
 
 const InfoScreen = ({ question, keys, submitAnswer }: Props) => {

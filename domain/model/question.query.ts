@@ -1,10 +1,11 @@
+import { ValidValue } from "./option.dto";
 import { OptionQuery } from "./option.query";
 import { QuestionType } from "./question.dto";
 import { QuizResultDTO } from "./result.dto";
 
 export interface QuestionQuery {
     getId: () => string;
-    getTitle: (keys: { [key: string]: unknown }) => string;
+    getTitle: (keys: { [key: string]: ValidValue }) => string;
     getDescription: () => string | undefined;
     getType: () => QuestionType;
     getOptions: () => OptionQuery[];

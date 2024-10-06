@@ -1,7 +1,7 @@
 import { NextApiAdapter } from "@/data/adapters/nextApi.adapter";
-import { RootState } from "@/data/store/store";
 import { QuestionType } from "@/domain/model/question.dto";
 import { QuizDTO } from "@/domain/model/quiz.dto";
+import { RootState } from "@/domain/model/store.dao";
 import { getQuestion } from "@/domain/repositories/getQuestion";
 import { GetStaticPaths, GetStaticProps } from "next";
 import React from "react";

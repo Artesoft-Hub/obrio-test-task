@@ -1,3 +1,4 @@
+import { ValidValue } from "../model/option.dto";
 import { OptionQuery } from "../model/option.query";
 import { QuestionDTO, QuestionType } from "../model/question.dto";
 import { QuestionQuery } from "../model/question.query";
@@ -11,7 +12,7 @@ export class Question implements QuestionQuery {
         return this.dto.id;
     }
 
-    getTitle(keys: { [key: string]: unknown }): string {
+    getTitle(keys: { [key: string]: ValidValue }): string {
         if (!keys) {
             return this.dto.title;
         }
@@ -86,12 +87,15 @@ export class Question implements QuestionQuery {
 
     private mapKeysToTitle(
         title: string,
-        keys: { [key: string]: any }
+        keys: { [key: string]: ValidValue }
     ): string {
         return (
             title
                 // Replace placeholders keys like {{key}}
-                .replace(/{{(.*?)}}/g, (_, key) => keys[key.trim()] || "")
+                .replace(
+                    /{{(.*?)}}/g,
+                    (_, key) => keys[key.trim()]?.toString() || ""
+                )
                 // Handle conditional logic {text (condition)}
                 .replace(/\{(.*?)\((.*?)\)\}/g, (_, text, condition) =>
                     keys[condition.trim()] ? text : ""
