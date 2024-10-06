@@ -29,7 +29,6 @@ export const useHistory = () => useContext(historyManagerContext);
 export function useHistoryManager() {
     const router = useRouter();
     const [history, setHistory] = useState<string[]>([]);
-    console.log(history);
 
     useEffect(() => {
         // set initial history route
