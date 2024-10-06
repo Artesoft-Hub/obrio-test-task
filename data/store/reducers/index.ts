@@ -16,11 +16,6 @@ export const rootReducer = {
         const { quizId } = action.payload;
         state.results[quizId].finished = true;
     },
-    resetQuiz: (state: QuizzesState, action: PayloadAction<QuizID>) => {
-        const { quizId } = action.payload;
-        delete state.results[quizId];
-    },
-
     answerQuestion: (
         state: QuizzesState,
         action: PayloadAction<QuizID & QuestionID & Value>
