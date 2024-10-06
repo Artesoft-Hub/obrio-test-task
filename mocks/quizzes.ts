@@ -2,8 +2,8 @@ import { QuestionType } from "@/domain/model/question.dto";
 
 export const mockData = [
     {
-        id: "test-1",
-        title: "Cover all use-cases",
+        id: "obrio-example",
+        title: "This one is from Obrio Figma file",
         description:
             "Includes branching, different types, conditional logic in titles",
         questions: [
@@ -42,12 +42,25 @@ export const mockData = [
                         id: "a4",
                         title: "Fiction",
                         value: "Fiction",
-                        nextQuestion: "q5",
+                        nextQuestion: "q55",
                     },
                     {
                         id: "a5",
                         title: "Non-fiction",
                         value: "Non-fiction",
+                        nextQuestion: "q5",
+                    },
+                ],
+            },
+            {
+                id: "q55",
+                title: "What is your name?",
+                store_key: "name",
+                type: QuestionType.TextInput,
+                options: [
+                    {
+                        id: "a4",
+                        title: "Next",
                         nextQuestion: "q5",
                     },
                 ],
@@ -145,7 +158,6 @@ export const mockData = [
                     {
                         id: "a12",
                         title: "Next",
-                        value: "Next",
                         nextQuestion: "q7",
                     },
                 ],
@@ -160,7 +172,6 @@ export const mockData = [
                     {
                         id: "a12",
                         title: "Next",
-                        value: "Next",
                         nextQuestion: "q8",
                     },
                 ],

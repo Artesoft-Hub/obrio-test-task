@@ -1,7 +1,7 @@
 import { QuizCard } from "@/components/QuizCard";
 import { GetStaticProps } from "next";
 import { QuizDTO } from "@/domain/model/quiz.dto";
-import { NextApiAdapter } from "@/data/adapters/nextApi.adapter";
+import { SomeApiAdapter } from "@/data/adapters/someApi.adapter";
 import { Quiz } from "@/domain/queries/Quiz";
 import { getQuiz } from "@/domain/repositories/getQuiz";
 
@@ -10,7 +10,7 @@ type Props = {
 };
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
-    const adapter = new NextApiAdapter();
+    const adapter = new SomeApiAdapter();
     const quizDTOs = await adapter.getAllQuizes();
 
     return { props: { quizDTOs } };

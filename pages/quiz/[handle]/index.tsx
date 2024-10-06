@@ -1,4 +1,4 @@
-import { NextApiAdapter } from "@/data/adapters/nextApi.adapter";
+import { SomeApiAdapter } from "@/data/adapters/someApi.adapter";
 import { startQuiz } from "@/data/commands";
 import { QuizDTO } from "@/domain/model/quiz.dto";
 import { RootState } from "@/domain/model/store.dao";
@@ -13,7 +13,7 @@ type Props = {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    const adapter = new NextApiAdapter();
+    const adapter = new SomeApiAdapter();
     const quizDTOs = await adapter.getAllQuizes();
     const paths = quizDTOs.map((dto) => ({
         params: {
@@ -28,7 +28,7 @@ export const getStaticProps: GetStaticProps<Props, { handle: string }> = async (
     context
 ) => {
     const { handle } = context.params!;
-    const adapter = new NextApiAdapter();
+    const adapter = new SomeApiAdapter();
     const dto = await adapter.getQuizByID(handle);
 
     return {

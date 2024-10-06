@@ -2,7 +2,7 @@ import InfoScreen from "@/components/InfoScreen";
 import SingleSelectQuestion from "@/components/OptionSelectQuestion";
 import TextInputQuestion from "@/components/TextInputQuestion";
 import UnknownScreen from "@/components/UnknownScreen";
-import { NextApiAdapter } from "@/data/adapters/nextApi.adapter";
+import { SomeApiAdapter } from "@/data/adapters/someApi.adapter";
 import { answerQuestion, finishQuiz, setQuestionKey } from "@/data/commands";
 import { RootState } from "@/domain/model/store.dao";
 import { OptionQuery } from "@/domain/model/option.query";
@@ -30,7 +30,7 @@ type ScreenProps = {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    const adapter = new NextApiAdapter();
+    const adapter = new SomeApiAdapter();
     const quizDTOs = await adapter.getAllQuizes();
     const paths = quizDTOs.flatMap((quiz) =>
         quiz.questions.map((dto) => ({
@@ -47,7 +47,7 @@ export const getStaticProps: GetStaticProps<
 > = async (context) => {
     const { handle, question } = context.params!;
 
-    const adapter = new NextApiAdapter();
+    const adapter = new SomeApiAdapter();
     const quizDTO = await adapter.getQuizByID(handle);
     const questionDTO = quizDTO.questions.find((dto) => dto.id === question)!;
 
