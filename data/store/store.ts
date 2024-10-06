@@ -1,21 +1,11 @@
+import { QuizResultDTO } from "@/domain/model/result.dto";
 import { configureStore } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
 import { createWrapper, HYDRATE } from "next-redux-wrapper";
 
-interface QuizResult {
-    finished: boolean;
-    keys: {
-        [key: string]: unknown;
-    };
-    answers: {
-        questionId: string;
-        value: any;
-    }[];
-}
-
 interface QuizzesState {
     results: {
-        [quizId: string]: QuizResult;
+        [quizId: string]: QuizResultDTO;
     };
 }
 

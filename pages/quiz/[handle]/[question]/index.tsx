@@ -8,14 +8,18 @@ import { RootState } from "@/data/store/store";
 import { OptionQuery } from "@/domain/model/option.query";
 import { QuestionDTO, QuestionType } from "@/domain/model/question.dto";
 import { QuestionQuery } from "@/domain/model/question.query";
+import { QuizDTO } from "@/domain/model/quiz.dto";
 import { getQuestion } from "@/domain/repositories/getQuestion";
+import { getQuiz } from "@/domain/repositories/getQuiz";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 type Props = {
     handle: string;
-    dto: QuestionDTO;
+    questionDTO: QuestionDTO;
+    quizDTO: QuizDTO;
 };
 
 type ScreenProps = {
@@ -43,13 +47,11 @@ export const getStaticProps: GetStaticProps<
     const { handle, question } = context.params!;
 
     const adapter = new NextApiAdapter();
-    const quiz = await adapter.getQuizByID(handle);
-    const dto = quiz.questions.find(
-        (questionDTO) => questionDTO.id === question
-    )!;
+    const quizDTO = await adapter.getQuizByID(handle);
+    const questionDTO = quizDTO.questions.find((dto) => dto.id === question)!;
 
     return {
-        props: { handle, dto },
+        props: { handle, questionDTO, quizDTO },
     };
 };
 
@@ -59,16 +61,42 @@ const TYPE_TO_SCREEN = new Map<QuestionType, React.FC<ScreenProps>>([
     [QuestionType.TextInput, TextInputQuestion],
 ]);
 
-export default function QuizQuestion({ dto, handle }: Props) {
+export default function QuizQuestion({ questionDTO, quizDTO, handle }: Props) {
     const results = useSelector((state: RootState) => state.quizzes.results);
     const router = useRouter();
+    const [keys, setKeys] = useState<{ [key: string]: string | number }>({});
 
-    const question = getQuestion(dto);
-    const keys = results[handle]?.keys;
+    const question = getQuestion(questionDTO);
+    const quiz = getQuiz(quizDTO);
+    const questionID = question.getId();
+
     const type = question.getType();
     const questionKey = question.getStoredKey();
 
     const Component = TYPE_TO_SCREEN.get(type) ?? UnknownScreen;
+
+    const setup = () => {
+        const currentResult = results[handle];
+
+        if (!currentResult) {
+            return router.push(`/quiz/${handle}`);
+        }
+
+        const isAccessible = quiz.isQuestionAvailable(
+            currentResult,
+            questionID
+        );
+
+        if (!isAccessible) {
+            return router.back();
+        }
+
+        setKeys(currentResult.keys);
+    };
+
+    useEffect(() => {
+        setup();
+    }, [questionID]);
 
     const handleSubmit = (
         selectedOption: OptionQuery,

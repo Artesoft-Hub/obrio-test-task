@@ -1,5 +1,6 @@
 import { OptionQuery } from "./option.query";
 import { QuestionType } from "./question.dto";
+import { QuizResultDTO } from "./result.dto";
 
 export interface QuestionQuery {
     getId: () => string;
@@ -9,4 +10,5 @@ export interface QuestionQuery {
     getOptions: () => OptionQuery[];
     getStoredKey: () => string | undefined;
     getResult: (value: any) => string;
+    isQuestionAccessible: (quizResult: QuizResultDTO) => boolean;
 }

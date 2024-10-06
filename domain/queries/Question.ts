@@ -1,6 +1,7 @@
 import { OptionQuery } from "../model/option.query";
 import { QuestionDTO, QuestionType } from "../model/question.dto";
 import { QuestionQuery } from "../model/question.query";
+import { QuizResultDTO } from "../model/result.dto";
 import { Option } from "./Option";
 
 export class Question implements QuestionQuery {
@@ -40,6 +41,35 @@ export class Question implements QuestionQuery {
         }
 
         return this.getOptionResult(value);
+    }
+
+    isQuestionAccessible(quizResult: QuizResultDTO): boolean {
+        // If the quiz is finished, no question should be accessible
+        if (quizResult.finished) {
+            return false;
+        }
+
+        // Check if the question is already answered
+        const questionAnswered = quizResult.answers.some(
+            (answer) => answer.questionId === this.dto.id
+        );
+
+        // If the question is answered, it may not need to be accessed again
+        if (questionAnswered) {
+            return false;
+        }
+
+        // Optionally: Check if the question is the next unanswered question
+        const unansweredQuestions = quizResult.answers.filter(
+            (answer) => !answer.value
+        );
+        const nextQuestionId =
+            unansweredQuestions.length > 0
+                ? unansweredQuestions[0].questionId
+                : null;
+
+        // If the current questionId is the next question to be answered, return true
+        return this.dto.id === nextQuestionId;
     }
 
     private getCustomResult(data: any): string {
