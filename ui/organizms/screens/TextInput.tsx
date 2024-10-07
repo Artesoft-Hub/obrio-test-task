@@ -42,7 +42,10 @@ const TextInput = ({ question, submitAnswer, result }: Props) => {
             />
             <Flex gap={Gap.Medium}>
                 {options.map((option: OptionQuery) => (
-                    <Button onClick={() => handleSubmit(option)}>
+                    <Button
+                        key={option.getId()}
+                        onClick={() => handleSubmit(option)}
+                    >
                         {option.getTitle()}
                     </Button>
                 ))}

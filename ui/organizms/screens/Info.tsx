@@ -38,7 +38,10 @@ const Info = ({ question, submitAnswer, result }: Props) => {
                 <Typography>{description}</Typography>
                 <Flex gap={Gap.Medium}>
                     {options.map((option: OptionQuery) => (
-                        <Button onClick={() => submitAnswer(option)}>
+                        <Button
+                            key={option.getId()}
+                            onClick={() => submitAnswer(option)}
+                        >
                             {option.getTitle()}
                         </Button>
                     ))}
