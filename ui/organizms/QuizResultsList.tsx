@@ -13,7 +13,7 @@ type Props = {
 const QuizResultsList = ({ quiz, results }: Props) => {
     if (!results) {
         return (
-            <Heading h={2}>Looks like you didn't finish this quiz !</Heading>
+            <Heading h={3}>Looks like you didn't finish this quiz !</Heading>
         );
     }
 

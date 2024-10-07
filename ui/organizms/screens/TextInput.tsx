@@ -9,6 +9,7 @@ import Heading from "@/ui/atoms/Heading";
 import { Space } from "@/ui/atoms/Space";
 import { Button } from "@/ui/atoms/Button";
 import { Input } from "@/ui/atoms/Input";
+import QuestionTitle from "@/ui/molecules/QuestionTitle";
 
 type Props = {
     result: QuizResultDTO | undefined;
@@ -32,9 +33,7 @@ const TextInput = ({ question, submitAnswer, result }: Props) => {
 
     return (
         <Container alignitems="center" direction="column" gap={Gap.Bigger}>
-            <Space mt={40}>
-                <Heading h={3}>{title}</Heading>
-            </Space>
+            <QuestionTitle title={title} />
             <Input
                 type="text"
                 value={value}

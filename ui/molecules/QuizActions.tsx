@@ -5,6 +5,7 @@ import { QuizResultDTO } from "@/domain/model/result.dto";
 import { useRouter } from "next/router";
 import { startQuiz } from "@/data/commands";
 import Flex, { Gap } from "../atoms/Flex";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 
 type Props = {
     quiz: QuizQuery;
@@ -13,6 +14,7 @@ type Props = {
 
 const QuizActions = ({ quiz, results }: Props) => {
     const router = useRouter();
+    const isMobile = useMediaQuery();
     const hasResults = quiz.hasResults(results);
     const id = quiz.getId();
     const firstQuestionID = quiz.getFirstQuestion().getId();
@@ -26,11 +28,15 @@ const QuizActions = ({ quiz, results }: Props) => {
         router.push(`/quiz/${id}/results`);
     };
 
+    const flexDirection = isMobile ? "column" : "row";
+
     return (
-        <Flex gap={Gap.Medium}>
+        <Flex gap={Gap.Medium} direction={flexDirection}>
             <Button onClick={handleStart}>Start quiz</Button>
             {hasResults && (
-                <Button variant={ButtonVariant.outline} onClick={handleResults}>View results</Button>
+                <Button variant={ButtonVariant.outline} onClick={handleResults}>
+                    View results
+                </Button>
             )}
         </Flex>
     );

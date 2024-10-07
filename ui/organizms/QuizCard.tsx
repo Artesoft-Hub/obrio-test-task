@@ -8,12 +8,16 @@ import { Divider } from "../atoms/Divider";
 import { Button } from "../atoms/Button";
 import Link from "next/link";
 import QuizInfo from "../molecules/QuizInfo";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 
 type Props = {
     quiz: QuizQuery;
 };
 
 const QuizCard = ({ quiz }: Props) => {
+    const isMobile = useMediaQuery();
+    const width = isMobile ? "fullWidth" : "content";
+
     return (
         <Card>
             <QuizInfo
@@ -24,7 +28,7 @@ const QuizCard = ({ quiz }: Props) => {
                 <Divider />
             </Space>
             <Link href={`quiz/${quiz.getId()}`}>
-                <Button>View details</Button>
+                <Button width={width}>View details</Button>
             </Link>
         </Card>
     );

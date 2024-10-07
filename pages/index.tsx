@@ -27,18 +27,6 @@ export default function Home({ quizDTOs }: Props) {
                 <Heading h={1}>Take a quiz</Heading>
             </Space>
             <QuizCardList quizzes={quizzes} />
-            {/* <div
-                style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "flex-start",
-                    gap: 20,
-                }}
-            >
-                {quizzes?.map((quiz: Quiz) => (
-                    <QuizCard key={quiz.getId()} quiz={quiz} />
-                ))}
-            </div> */}
         </>
     );
 }

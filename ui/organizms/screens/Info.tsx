@@ -10,6 +10,7 @@ import { Space } from "@/ui/atoms/Space";
 import { Button } from "@/ui/atoms/Button";
 import Typography from "@/ui/atoms/Typography";
 import { InfoGlobalStyle } from "@/ui/atoms/InfoGlobalStyle";
+import QuestionTitle from "@/ui/molecules/QuestionTitle";
 
 type Props = {
     result: QuizResultDTO | undefined;
@@ -32,9 +33,7 @@ const Info = ({ question, submitAnswer, result }: Props) => {
         <>
             <InfoGlobalStyle />
             <Container alignitems="center" direction="column" gap={Gap.Bigger}>
-                <Space mt={40}>
-                    <Heading h={3}>{title}</Heading>
-                </Space>
+                <QuestionTitle title={title} />
                 <Typography>{description}</Typography>
                 <Flex gap={Gap.Medium}>
                     {options.map((option: OptionQuery) => (

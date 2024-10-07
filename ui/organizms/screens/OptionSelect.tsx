@@ -8,6 +8,7 @@ import Heading from "@/ui/atoms/Heading";
 import QuizOptions from "../QuizOptions";
 import { styled } from "styled-components";
 import { QuizResultDTO } from "@/domain/model/result.dto";
+import QuestionTitle from "@/ui/molecules/QuestionTitle";
 
 type Props = {
     result: QuizResultDTO | undefined;
@@ -26,9 +27,7 @@ const OptionSelect = ({ question, submitAnswer, result }: Props) => {
 
     return (
         <Container alignitems="center" direction="column" gap={Gap.Bigger}>
-            <Space mt={40}>
-                <Heading h={3}>{title}</Heading>
-            </Space>
+            <QuestionTitle title={title} />
             <QuizOptions
                 options={options}
                 submitAnswer={submitAnswer}
