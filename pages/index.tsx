@@ -1,9 +1,11 @@
-import { QuizCard } from "@/ui/QuizCard";
+// import { QuizCard } from "@/ui/QuizCard";
 import { GetStaticProps } from "next";
 import { QuizDTO } from "@/domain/model/quiz.dto";
 import { SomeApiAdapter } from "@/data/adapters/someApi.adapter";
-import { Quiz } from "@/domain/queries/Quiz";
 import { getQuiz } from "@/domain/repositories/getQuiz";
+import QuizCardList from "@/ui/organizms/QuizCardList";
+import Heading from "@/ui/atoms/Heading";
+import { Space } from "@/ui/atoms/Space";
 
 type Props = {
     quizDTOs: QuizDTO[];
@@ -21,19 +23,10 @@ export default function Home({ quizDTOs }: Props) {
 
     return (
         <>
-            <h1>Take a quiz</h1>
-            <div
-                style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "flex-start",
-                    gap: 20,
-                }}
-            >
-                {quizzes?.map((quiz: Quiz) => (
-                    <QuizCard key={quiz.getId()} quiz={quiz} />
-                ))}
-            </div>
+            <Space mt={24} mb={16}>
+                <Heading h={1}>Take a quiz</Heading>
+            </Space>
+            <QuizCardList quizzes={quizzes} />
         </>
     );
 }

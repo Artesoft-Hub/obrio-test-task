@@ -1,15 +1,23 @@
 import { SomeApiAdapter } from "@/data/adapters/someApi.adapter";
-import { QuestionType } from "@/domain/model/question.dto";
 import { QuizDTO } from "@/domain/model/quiz.dto";
 import { RootState } from "@/domain/model/store.dao";
-import { getQuestion } from "@/domain/repositories/getQuestion";
+import { getQuiz } from "@/domain/repositories/getQuiz";
+import Flex, { Gap } from "@/ui/atoms/Flex";
+import Heading from "@/ui/atoms/Heading";
+import { Space } from "@/ui/atoms/Space";
+import QuizResultsList from "@/ui/organizms/QuizResultsList";
 import { GetStaticPaths, GetStaticProps } from "next";
 import React from "react";
 import { useSelector } from "react-redux";
+import { styled } from "styled-components";
 
 type Props = {
     dto: QuizDTO;
 };
+
+const Container = styled(Flex)`
+    margin: 0 auto;
+`;
 
 export const getStaticPaths: GetStaticPaths = async () => {
     const adapter = new SomeApiAdapter();
@@ -36,37 +44,18 @@ export const getStaticProps: GetStaticProps<Props, { handle: string }> = async (
 };
 
 const QuizResults = ({ dto }: Props) => {
+    const quiz = getQuiz(dto);
     const results = useSelector(
         (state: RootState) => state.quizzes.results[dto.id]
     );
 
-    const keys = results?.keys;
-
     return (
-        <div>
-            <h1>Quiz Results</h1>
-            <ul>
-                {results &&
-                    results.answers.map(({ questionId, value }) => {
-                        const questionDTO = dto.questions.find(
-                            (question) => question.id === questionId
-                        )!;
-
-                        if (questionDTO.type === QuestionType.Info) {
-                            return;
-                        }
-
-                        const question = getQuestion(questionDTO);
-                        const answer = question.getResult(value);
-
-                        return (
-                            <li key={questionId}>
-                                {question?.getTitle(keys)} - {answer}
-                            </li>
-                        );
-                    })}
-            </ul>
-        </div>
+        <Container direction="column" gap={Gap.Big}>
+            <Space mt={40}>
+                <Heading h={2}>Quiz Results</Heading>
+            </Space>
+            <QuizResultsList results={results} quiz={quiz} />
+        </Container>
     );
 };
 

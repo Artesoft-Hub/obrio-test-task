@@ -1,8 +1,12 @@
 import { OptionDTO, ValidValue } from "../model/option.dto";
 import { OptionQuery } from "../model/option.query";
+import { QuizResultDTO } from "../model/result.dto";
 
 export class Option implements OptionQuery {
-    constructor(private readonly dto: OptionDTO) {}
+    constructor(
+        private readonly dto: OptionDTO,
+        private readonly questionId: string
+    ) {}
 
     getId(): string {
         return this.dto.id;
@@ -22,5 +26,17 @@ export class Option implements OptionQuery {
 
     getNextQuestionId(): string | null {
         return this.dto.nextQuestion;
+    }
+
+    isSelected(result: QuizResultDTO | undefined): boolean {
+        if (!result) {
+            return false;
+        }
+
+        return result.answers.some(
+            (answer) =>
+                answer.value === this.dto.value &&
+                answer.questionId === this.questionId
+        );
     }
 }

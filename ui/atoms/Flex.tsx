@@ -13,6 +13,7 @@ export enum Gap {
 
 type Props = {
     gap?: Gap;
+    isFullWidth?: boolean;
     justifyContent?: CSSProperties["justifyContent"];
     direction?: CSSProperties["flexDirection"];
     alignitems?: CSSProperties["alignItems"];
@@ -21,6 +22,7 @@ type Props = {
 
 const FlexContainer = styled.div<Props>`
     display: flex;
+    width: ${(props) => (props.isFullWidth ? "100%" : "unset")};
     gap: ${({ gap }) => gap ?? Gap.None}px;
     flex-direction: ${({ direction }) => direction ?? "unset"};
     justify-content: ${({ justifyContent }) => justifyContent ?? "unset"};

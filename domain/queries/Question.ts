@@ -12,7 +12,7 @@ export class Question implements QuestionQuery {
         return this.dto.id;
     }
 
-    getTitle(keys: { [key: string]: ValidValue }): string {
+    getTitle(keys: { [key: string]: ValidValue } | undefined): string {
         if (!keys) {
             return this.dto.title;
         }
@@ -29,7 +29,7 @@ export class Question implements QuestionQuery {
     }
 
     getOptions(): OptionQuery[] {
-        return this.dto.options.map((dto) => new Option(dto));
+        return this.dto.options.map((dto) => new Option(dto, this.dto.id));
     }
 
     getStoredKey(): string | undefined {

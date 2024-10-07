@@ -28,6 +28,11 @@ export class Quiz implements QuizQuery {
         return this.dto.questions.map((dto) => new Question(dto));
     }
 
+    hasResults(results: { [quizId: string]: QuizResultDTO }): boolean {
+        const { id } = this.dto;
+        return id in results && results[id].finished;
+    }
+
     isQuestionAvailable(
         quizResult: QuizResultDTO,
         targetQuestionId: string

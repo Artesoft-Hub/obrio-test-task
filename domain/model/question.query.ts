@@ -5,7 +5,7 @@ import { QuizResultDTO } from "./result.dto";
 
 export interface QuestionQuery {
     getId: () => string;
-    getTitle: (keys: { [key: string]: ValidValue }) => string;
+    getTitle: (keys: { [key: string]: ValidValue } | undefined) => string;
     getDescription: () => string | undefined;
     getType: () => QuestionType;
     getOptions: () => OptionQuery[];
