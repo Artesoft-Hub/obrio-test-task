@@ -1,8 +1,10 @@
 import { useRouter } from "next/router";
-const NavigateBack = () => {
+import React from "react";
+
+const BackButton = () => {
     const router = useRouter();
 
     return <button onClick={() => router.back()}>Go back</button>;
 };
 
-export default NavigateBack;
+export default BackButton;

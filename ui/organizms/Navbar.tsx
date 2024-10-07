@@ -2,7 +2,8 @@ import React from "react";
 import Logo from "../molecules/Logo";
 import { useHistory } from "../History";
 import Grid from "../atoms/Grid";
-import NavigateBack from "../NavigateBack";
+import BackButton from "../molecules/BackButton";
+import Flex from "../atoms/Flex";
 
 const Navbar = () => {
     const historyManager = useHistory()!;
@@ -10,8 +11,10 @@ const Navbar = () => {
 
     return (
         <Grid columns={3} alignitems="center">
-            <div>{canGoBack && <NavigateBack />}</div>
-            <Logo />
+            <div>{canGoBack && <BackButton />}</div>
+            <Flex justifyContent="center">
+                <Logo />
+            </Flex>
         </Grid>
     );
 };
