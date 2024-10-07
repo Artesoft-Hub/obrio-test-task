@@ -1,12 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { ValidValue } from "@/domain/model/option.dto";
 import { OptionQuery } from "@/domain/model/option.query";
 import { QuestionQuery } from "@/domain/model/question.query";
 import { QuizResultDTO } from "@/domain/model/result.dto";
 import Flex, { Gap } from "@/ui/atoms/Flex";
-import Heading from "@/ui/atoms/Heading";
-import { Space } from "@/ui/atoms/Space";
 import { Button } from "@/ui/atoms/Button";
 import { Input } from "@/ui/atoms/Input";
 import QuestionTitle from "@/ui/molecules/QuestionTitle";
@@ -27,6 +25,16 @@ const TextInput = ({ question, submitAnswer, result }: Props) => {
     const title = question.getTitle(result?.keys);
     const options = question.getOptions();
 
+    useEffect(() => {
+        const currentAnswer = result?.answers.find(
+            (answer) => question.getId() === answer.questionId
+        );
+
+        if (currentAnswer) {
+            setValue(currentAnswer.value.toString());
+        }
+    }, [result]);
+
     const handleSubmit = (option: OptionQuery) => {
         submitAnswer(option, value);
     };
@@ -38,6 +46,7 @@ const TextInput = ({ question, submitAnswer, result }: Props) => {
                 type="text"
                 value={value}
                 onChange={(e) => setValue(e.target.value)}
+                placeholder="Start typing..."
             />
             <Flex gap={Gap.Medium}>
                 {options.map((option: OptionQuery) => (
