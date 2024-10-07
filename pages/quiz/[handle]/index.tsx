@@ -1,10 +1,14 @@
 import { SomeApiAdapter } from "@/data/adapters/someApi.adapter";
-import { startQuiz } from "@/data/commands";
 import { QuizDTO } from "@/domain/model/quiz.dto";
 import { RootState } from "@/domain/model/store.dao";
 import { getQuiz } from "@/domain/repositories/getQuiz";
+import Flex, { Gap } from "@/ui/atoms/Flex";
+import Grid from "@/ui/atoms/Grid";
+import { Space } from "@/ui/atoms/Space";
+import TeamPicture from "@/ui/atoms/TeamPicture";
+import QuizActions from "@/ui/molecules/QuizActions";
+import QuizInfo from "@/ui/molecules/QuizInfo";
 import { GetStaticPaths, GetStaticProps } from "next";
-import { useRouter } from "next/router";
 import React from "react";
 import { useSelector } from "react-redux";
 
@@ -38,33 +42,23 @@ export const getStaticProps: GetStaticProps<Props, { handle: string }> = async (
 
 const QuizWelcomeScreen = ({ dto }: Props) => {
     const quiz = getQuiz(dto);
-    const router = useRouter();
-    const { handle } = router.query;
     const results = useSelector((state: RootState) => state.quizzes.results);
 
     const title = quiz.getTitle();
     const description = quiz.getDescription();
-    const firstQuestionID = quiz.getFirstQuestion().getId();
-
-    const handleStart = () => {
-        startQuiz(quiz.getId());
-        router.push(`/quiz/${handle}/${firstQuestionID}`);
-    };
-
-    const handleResults = () => {
-        router.push(`/quiz/${handle}/results`);
-    };
 
     return (
-        <div>
-            <h2>{title}</h2>
-            <p>{description}</p>
-            {quiz.getId()}
-            {quiz.getId() in results && results[quiz.getId()].finished && (
-                <button onClick={handleResults}>View results</button>
-            )}
-            <button onClick={handleStart}>Start quiz</button>
-        </div>
+        <Space pr={60} pl={60} mt={60}>
+            <Grid columns={2} alignitems="center">
+                <Flex direction="column" gap={Gap.SemiBig}>
+                    <QuizInfo title={title} description={description} />
+                    <QuizActions quiz={quiz} results={results} />
+                </Flex>
+                <Flex justifyContent="center">
+                    <TeamPicture />
+                </Flex>
+            </Grid>
+        </Space>
     );
 };
 
