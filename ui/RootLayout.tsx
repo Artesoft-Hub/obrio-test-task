@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from "react";
-import Navbar from "./Navbar";
+import Navbar from "./organizms/Navbar";
 
 const RootLayout = ({ children }: PropsWithChildren) => {
     return (

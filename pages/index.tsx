@@ -1,4 +1,4 @@
-import { QuizCard } from "@/components/QuizCard";
+import { QuizCard } from "@/ui/QuizCard";
 import { GetStaticProps } from "next";
 import { QuizDTO } from "@/domain/model/quiz.dto";
 import { SomeApiAdapter } from "@/data/adapters/someApi.adapter";

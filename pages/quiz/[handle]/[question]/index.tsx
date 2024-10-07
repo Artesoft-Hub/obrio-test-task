@@ -1,7 +1,7 @@
-import InfoScreen from "@/components/InfoScreen";
-import SingleSelectQuestion from "@/components/OptionSelectQuestion";
-import TextInputQuestion from "@/components/TextInputQuestion";
-import UnknownScreen from "@/components/UnknownScreen";
+import InfoScreen from "@/ui/InfoScreen";
+import SingleSelectQuestion from "@/ui/OptionSelectQuestion";
+import TextInputQuestion from "@/ui/TextInputQuestion";
+import UnknownScreen from "@/ui/UnknownScreen";
 import { SomeApiAdapter } from "@/data/adapters/someApi.adapter";
 import { answerQuestion, finishQuiz, setQuestionKey } from "@/data/commands";
 import { RootState } from "@/domain/model/store.dao";
