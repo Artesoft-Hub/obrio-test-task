@@ -1,16 +1,17 @@
 import { ValidValue } from "@/domain/model/option.dto";
 import { OptionQuery } from "@/domain/model/option.query";
 import { QuestionQuery } from "@/domain/model/question.query";
+import { QuizResultDTO } from "@/domain/model/result.dto";
 import React from "react";
 
 type Props = {
-    keys: { [key: string]: ValidValue };
+    result: QuizResultDTO | undefined;
     question: QuestionQuery;
     submitAnswer: (option: OptionQuery, customValue?: ValidValue) => void;
 };
 
-const InfoScreen = ({ question, keys, submitAnswer }: Props) => {
-    const title = question.getTitle(keys);
+const InfoScreen = ({ question, result, submitAnswer }: Props) => {
+    const title = question.getTitle(result?.keys);
     const description = question.getDescription();
     const options = question.getOptions();
 

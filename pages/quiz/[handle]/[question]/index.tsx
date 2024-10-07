@@ -1,5 +1,4 @@
 import InfoScreen from "@/ui/InfoScreen";
-import SingleSelectQuestion from "@/ui/OptionSelectQuestion";
 import TextInputQuestion from "@/ui/TextInputQuestion";
 import UnknownScreen from "@/ui/UnknownScreen";
 import { SomeApiAdapter } from "@/data/adapters/someApi.adapter";
@@ -16,6 +15,8 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { ValidValue } from "@/domain/model/option.dto";
+import OptionSelect from "@/ui/organizms/screens/OptionSelect";
+import { QuizResultDTO } from "@/domain/model/result.dto";
 
 type Props = {
     handle: string;
@@ -24,7 +25,7 @@ type Props = {
 };
 
 type ScreenProps = {
-    keys: { [key: string]: ValidValue };
+    result: QuizResultDTO | undefined;
     question: QuestionQuery;
     submitAnswer: (option: OptionQuery, customValue?: ValidValue) => void;
 };
@@ -58,14 +59,14 @@ export const getStaticProps: GetStaticProps<
 
 const TYPE_TO_SCREEN = new Map<QuestionType, React.FC<ScreenProps>>([
     [QuestionType.Info, InfoScreen],
-    [QuestionType.OptionSelect, SingleSelectQuestion],
+    [QuestionType.OptionSelect, OptionSelect],
     [QuestionType.TextInput, TextInputQuestion],
 ]);
 
 export default function QuizQuestion({ questionDTO, quizDTO, handle }: Props) {
     const results = useSelector((state: RootState) => state.quizzes.results);
     const router = useRouter();
-    const [keys, setKeys] = useState<{ [key: string]: ValidValue }>({});
+    const [currentResult, setCurrentResult] = useState<QuizResultDTO>();
 
     const question = getQuestion(questionDTO);
     const quiz = getQuiz(quizDTO);
@@ -90,7 +91,7 @@ export default function QuizQuestion({ questionDTO, quizDTO, handle }: Props) {
             return router.back();
         }
 
-        setKeys(currentResult.keys);
+        setCurrentResult(currentResult);
     };
 
     const Component = TYPE_TO_SCREEN.get(type) ?? UnknownScreen;
@@ -126,7 +127,7 @@ export default function QuizQuestion({ questionDTO, quizDTO, handle }: Props) {
     return (
         <Component
             question={question}
-            keys={keys}
+            result={currentResult}
             submitAnswer={handleSubmit}
         />
     );

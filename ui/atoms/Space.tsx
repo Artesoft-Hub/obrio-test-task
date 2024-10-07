@@ -3,9 +3,9 @@ import { styled } from "styled-components";
 
 type MarginProps = {
     mt?: number | "auto";
+    mr?: number | "auto";
     mb?: number;
-    ml?: number;
-    mr?: number;
+    ml?: number | "auto";
 };
 
 type PaddingProps = {
@@ -17,17 +17,19 @@ type PaddingProps = {
 
 type SpaceProps = MarginProps & PaddingProps;
 
-const Container = styled.div<SpaceProps>`
-    margin-top: ${(props) => {
-        if (!props.mt) {
-            return "unset";
-        }
+const getValidMargin = (value: number | "auto" | undefined) => {
+    if (!value) {
+        return "unset";
+    }
 
-        return typeof props.mt === "number" ? `${props.mt}px` : "auto";
-    }};
-    margin-right: ${(props) => props.mr}px;
+    return typeof value === "number" ? `${value}px` : "auto";
+};
+
+const Container = styled.div<SpaceProps>`
+    margin-top: ${(props) => getValidMargin(props.mt)};
+    margin-right: ${(props) => getValidMargin(props.mr)};
+    margin-left: ${(props) => getValidMargin(props.ml)};
     margin-bottom: ${(props) => props.mb}px;
-    margin-left: ${(props) => props.ml}px;
     padding-top: ${(props) => props.pt}px;
     padding-right: ${(props) => props.pr}px;
     padding-bottom: ${(props) => props.pb}px;
