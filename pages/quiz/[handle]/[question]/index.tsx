@@ -17,6 +17,7 @@ import { useSelector } from "react-redux";
 import { ValidValue } from "@/domain/model/option.dto";
 import OptionSelect from "@/ui/organizms/screens/OptionSelect";
 import { QuizResultDTO } from "@/domain/model/result.dto";
+import Info from "@/ui/organizms/screens/Info";
 
 type Props = {
     handle: string;
@@ -58,7 +59,7 @@ export const getStaticProps: GetStaticProps<
 };
 
 const TYPE_TO_SCREEN = new Map<QuestionType, React.FC<ScreenProps>>([
-    [QuestionType.Info, InfoScreen],
+    [QuestionType.Info, Info],
     [QuestionType.OptionSelect, OptionSelect],
     [QuestionType.TextInput, TextInputQuestion],
 ]);
