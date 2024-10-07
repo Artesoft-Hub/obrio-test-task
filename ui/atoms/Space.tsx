@@ -2,7 +2,7 @@ import React, { PropsWithChildren } from "react";
 import { styled } from "styled-components";
 
 type MarginProps = {
-    mt?: number;
+    mt?: number | "auto";
     mb?: number;
     ml?: number;
     mr?: number;
@@ -18,7 +18,13 @@ type PaddingProps = {
 type SpaceProps = MarginProps & PaddingProps;
 
 const Container = styled.div<SpaceProps>`
-    margin-top: ${(props) => props.mt}px;
+    margin-top: ${(props) => {
+        if (!props.mt) {
+            return "unset";
+        }
+
+        return typeof props.mt === "number" ? `${props.mt}px` : "auto";
+    }};
     margin-right: ${(props) => props.mr}px;
     margin-bottom: ${(props) => props.mb}px;
     margin-left: ${(props) => props.ml}px;

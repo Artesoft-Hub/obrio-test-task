@@ -3,9 +3,9 @@ import { QuestionType } from "@/domain/model/question.dto";
 export const mockData = [
     {
         id: "obrio-example",
-        title: "This one is from Obrio Figma file",
+        title: "Obrio Figma File",
         description:
-            "Includes branching, different types, conditional logic in titles",
+            "We analyze hundreds of data points to create your unique astrological blueprint. This is combined with AI to tailor-make your astrological insights, based on your answers. We’re going to change your relationship with astrology.",
         questions: [
             {
                 id: "q1",

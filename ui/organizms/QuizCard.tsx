@@ -20,7 +20,7 @@ const QuizCard = ({ quiz }: Props) => {
                 title={quiz.getTitle()}
                 description={quiz.getDescription()}
             />
-            <Space mt={8} mb={8}>
+            <Space mt="auto" mb={8}>
                 <Divider />
             </Space>
             <Link href={`quiz/${quiz.getId()}`}>
