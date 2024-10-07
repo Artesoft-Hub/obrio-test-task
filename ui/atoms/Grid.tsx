@@ -23,6 +23,7 @@ type Props = {
 
 const GridContainer = styled.div<Props>`
     display: grid;
+    width: 100%;
     gap: ${({ gap }) => gap ?? Gap.None}px;
     grid-template-columns: ${({ columns }) =>
         columns ? `repeat(${columns}, 1fr)` : "auto"};

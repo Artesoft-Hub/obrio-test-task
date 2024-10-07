@@ -3,6 +3,7 @@ import { FC, ComponentProps, ReactNode } from "react";
 export enum ButtonVariant {
     flat = "flat",
     icon = "icon",
+    outline = "outline",
 }
 
 export type ThemeProps = {

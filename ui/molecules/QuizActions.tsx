@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "../atoms/Button";
+import { Button, ButtonVariant } from "../atoms/Button";
 import { QuizQuery } from "@/domain/model/quiz.query";
 import { QuizResultDTO } from "@/domain/model/result.dto";
 import { useRouter } from "next/router";
@@ -30,7 +30,7 @@ const QuizActions = ({ quiz, results }: Props) => {
         <Flex gap={Gap.Medium}>
             <Button onClick={handleStart}>Start quiz</Button>
             {hasResults && (
-                <Button onClick={handleResults}>View results</Button>
+                <Button variant={ButtonVariant.outline} onClick={handleResults}>View results</Button>
             )}
         </Flex>
     );

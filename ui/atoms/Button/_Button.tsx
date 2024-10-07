@@ -2,6 +2,7 @@ import React from "react";
 import { FlatButton } from "./_FlatButton";
 import { ButtonProps, ButtonVariant, ThemeProps, ThemedButton } from "./types";
 import { IconButton } from "./_IconButton";
+import { OutlineButton } from "./_OutlineButton";
 
 type Props = {
     testId?: string;
@@ -11,6 +12,7 @@ type Props = {
 const buttons = new Map<ButtonVariant, ThemedButton>([
     [ButtonVariant.flat, FlatButton],
     [ButtonVariant.icon, IconButton],
+    [ButtonVariant.outline, OutlineButton],
 ]);
 
 export const Button = ({

@@ -6,7 +6,7 @@ export const IconButton = styled.button<ThemeProps>`
     font-size: ${(props) => props.theme.fontSizes[props.size || "medium"]};
     font-family: ${(props) => props.theme.fontFamily};
     color: ${(props) =>
-        props.theme.colors[props.variant || ButtonVariant.flat][
+        props.theme.colors[props.variant || ButtonVariant.icon][
             props.color || "primary"
         ].text};
     width: ${(props) => props.theme.width[props.width || "content"]};
