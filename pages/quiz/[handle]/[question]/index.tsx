@@ -1,5 +1,3 @@
-import InfoScreen from "@/ui/InfoScreen";
-import TextInputQuestion from "@/ui/TextInputQuestion";
 import UnknownScreen from "@/ui/UnknownScreen";
 import { SomeApiAdapter } from "@/data/adapters/someApi.adapter";
 import { answerQuestion, finishQuiz, setQuestionKey } from "@/data/commands";
@@ -18,6 +16,7 @@ import { ValidValue } from "@/domain/model/option.dto";
 import OptionSelect from "@/ui/organizms/screens/OptionSelect";
 import { QuizResultDTO } from "@/domain/model/result.dto";
 import Info from "@/ui/organizms/screens/Info";
+import TextInput from "@/ui/organizms/screens/TextInput";
 
 type Props = {
     handle: string;
@@ -61,7 +60,7 @@ export const getStaticProps: GetStaticProps<
 const TYPE_TO_SCREEN = new Map<QuestionType, React.FC<ScreenProps>>([
     [QuestionType.Info, Info],
     [QuestionType.OptionSelect, OptionSelect],
-    [QuestionType.TextInput, TextInputQuestion],
+    [QuestionType.TextInput, TextInput],
 ]);
 
 export default function QuizQuestion({ questionDTO, quizDTO, handle }: Props) {
