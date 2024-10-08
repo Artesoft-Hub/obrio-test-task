@@ -12,11 +12,7 @@ export class StoreDAO implements StoreDAOModel {
     this.store.dispatch(startQuiz({ quizId }));
   }
 
-  answerQuestion(
-    quizId: string,
-    questionId: string,
-    value: ValidValue | undefined
-  ) {
+  answerQuestion(quizId: string, questionId: string, value: ValidValue) {
     this.store.dispatch(answerQuestion({ quizId, questionId, value }));
   }
 

@@ -31,7 +31,7 @@ export interface StoreDAO {
   answerQuestion: (
     quizId: string,
     questionId: string,
-    value: ValidValue | undefined
+    value: ValidValue
   ) => void;
   setKey: (quizId: string, key: string, value: ValidValue) => void;
 }

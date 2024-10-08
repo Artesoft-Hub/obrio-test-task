@@ -104,7 +104,7 @@ export default function QuizQuestion({ questionDTO, quizDTO, handle }: Props) {
     selectedOption: OptionQuery,
     customValue?: ValidValue
   ) => {
-    const answer = customValue ?? selectedOption.getValue();
+    const answer = customValue ?? selectedOption.getValue()!;
 
     answerQuestion(handle, question.getId(), answer);
 
