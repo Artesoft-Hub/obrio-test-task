@@ -1,23 +1,25 @@
-import { QuizzesState } from "@/domain/model/store.dao";
 import { configureStore } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
+
+import { QuizzesState } from "@/domain/model/store.dao";
+
 import { rootReducer } from "./reducers";
 
 const initialState: QuizzesState = {
-    results: {},
+  results: {},
 };
 
 const quizSlice = createSlice({
-    name: "quizzes",
-    initialState,
-    reducers: rootReducer,
+  name: "quizzes",
+  initialState,
+  reducers: rootReducer,
 });
 
 export const { startQuiz, finishQuiz, answerQuestion, setKey } =
-    quizSlice.actions;
+  quizSlice.actions;
 
 export const store = configureStore({
-    reducer: {
-        quizzes: quizSlice.reducer,
-    },
+  reducer: {
+    quizzes: quizSlice.reducer,
+  },
 });

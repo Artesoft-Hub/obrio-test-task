@@ -1,7 +1,7 @@
 import React from "react";
 
 const Unknown = () => {
-    return <div>Unknown</div>;
+  return <div>Unknown</div>;
 };
 
 export default Unknown;

@@ -4,12 +4,12 @@ import { QuestionType } from "./question.dto";
 import { QuizResultDTO } from "./result.dto";
 
 export interface QuestionQuery {
-    getId: () => string;
-    getTitle: (keys: { [key: string]: ValidValue } | undefined) => string;
-    getDescription: () => string | undefined;
-    getType: () => QuestionType;
-    getOptions: () => OptionQuery[];
-    getStoredKey: () => string | undefined;
-    getResult: (value: any) => string;
-    isQuestionAccessible: (quizResult: QuizResultDTO) => boolean;
+  getId: () => string;
+  getTitle: (keys: { [key: string]: ValidValue } | undefined) => string;
+  getDescription: () => string | undefined;
+  getType: () => QuestionType;
+  getOptions: () => OptionQuery[];
+  getStoredKey: () => string | undefined;
+  getResult: (value: ValidValue) => string;
+  isQuestionAccessible: (quizResult: QuizResultDTO) => boolean;
 }

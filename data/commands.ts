@@ -1,10 +1,10 @@
+import { answerQuestion as answerQuestionCommand } from "@/domain/commands/answerQuestion";
+import { finishQuiz as finishQuizCommand } from "@/domain/commands/finishQuiz";
+import { setQuestionKey as setQuestionKeyCommand } from "@/domain/commands/setQuestionKey";
+import { startQuiz as startQuizCommand } from "@/domain/commands/startQuiz";
+
 import { store } from "./store/store";
 import { StoreDAO } from "./store/store.dao";
-
-import { startQuiz as startQuizCommand } from "@/domain/commands/startQuiz";
-import { finishQuiz as finishQuizCommand } from "@/domain/commands/finishQuiz";
-import { answerQuestion as answerQuestionCommand } from "@/domain/commands/answerQuestion";
-import { setQuestionKey as setQuestionKeyCommand } from "@/domain/commands/setQuestionKey";
 
 const storeDAO = new StoreDAO(store);
 

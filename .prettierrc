@@ -1,0 +1,18 @@
+{
+    "semi": true,
+    "singleQuote": false,
+    "importOrder": [
+        "^(react|next|styled-components)(.*)$",
+        "^@/domain(.*)$",
+        "^@/data(.*)$",
+        "^@/(ui|hooks)(.*)$",
+        "^[./]"
+    ],
+    "importOrderSeparation": true,
+    "importOrderSortSpecifiers": true,
+    "printWidth": 80,
+    "trailingComma": "es5",
+    "plugins": [
+        "@trivago/prettier-plugin-sort-imports"
+    ]
+}
