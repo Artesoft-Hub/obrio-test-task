@@ -21,19 +21,19 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const quizDTOs = await adapter.getAllQuizes();
   const paths = quizDTOs.map((dto) => ({
     params: {
-      handle: dto.id,
+      quizID: dto.id,
     },
   }));
 
   return { paths, fallback: false };
 };
 
-export const getStaticProps: GetStaticProps<Props, { handle: string }> = async (
+export const getStaticProps: GetStaticProps<Props, { quizID: string }> = async (
   context
 ) => {
-  const { handle } = context.params!;
+  const { quizID } = context.params!;
   const adapter = new SomeApiAdapter();
-  const dto = await adapter.getQuizByID(handle);
+  const dto = await adapter.getQuizByID(quizID);
 
   return {
     props: { dto },

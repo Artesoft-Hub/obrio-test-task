@@ -22,7 +22,7 @@ import OptionSelect from "@/ui/organizms/screens/OptionSelect";
 import TextInput from "@/ui/organizms/screens/TextInput";
 
 type Props = {
-  handle: string;
+  quizID: string;
   questionDTO: QuestionDTO;
   quizDTO: QuizDTO;
 };
@@ -38,7 +38,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const quizDTOs = await adapter.getAllQuizes();
   const paths = quizDTOs.flatMap((quiz) =>
     quiz.questions.map((dto) => ({
-      params: { handle: quiz.id, question: dto.id },
+      params: { quizID: quiz.id, questionID: dto.id },
     }))
   );
 
@@ -47,16 +47,16 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps<
   Props,
-  { handle: string; question: string }
+  { quizID: string; questionID: string }
 > = async (context) => {
-  const { handle, question } = context.params!;
+  const { quizID, questionID } = context.params!;
 
   const adapter = new SomeApiAdapter();
-  const quizDTO = await adapter.getQuizByID(handle);
-  const questionDTO = quizDTO.questions.find((dto) => dto.id === question)!;
+  const quizDTO = await adapter.getQuizByID(quizID);
+  const questionDTO = quizDTO.questions.find((dto) => dto.id === questionID)!;
 
   return {
-    props: { handle, questionDTO, quizDTO },
+    props: { quizID, questionDTO, quizDTO },
   };
 };
 
@@ -66,7 +66,7 @@ const TYPE_TO_SCREEN = new Map<QuestionType, React.FC<ScreenProps>>([
   [QuestionType.TextInput, TextInput],
 ]);
 
-export default function QuizQuestion({ questionDTO, quizDTO, handle }: Props) {
+export default function QuizQuestion({ questionDTO, quizDTO, quizID }: Props) {
   const results = useSelector((state: RootState) => state.quizzes.results);
   const router = useRouter();
   const [currentResult, setCurrentResult] = useState<QuizResultDTO>();
@@ -79,10 +79,10 @@ export default function QuizQuestion({ questionDTO, quizDTO, handle }: Props) {
   const questionKey = question.getStoredKey();
 
   const checkIfQuestionAvailable = () => {
-    const currentResult = results[handle];
+    const currentResult = results[quizID];
 
     if (!currentResult) {
-      return router.push(`/quiz/${handle}`);
+      return router.push(`/quiz/${quizID}`);
     }
 
     const isAccessible = quiz.isQuestionAvailable(currentResult, questionID);
@@ -106,22 +106,22 @@ export default function QuizQuestion({ questionDTO, quizDTO, handle }: Props) {
   ) => {
     const answer = customValue ?? selectedOption.getValue()!;
 
-    answerQuestion(handle, question.getId(), answer);
+    answerQuestion(quizID, question.getId(), answer);
 
     if (questionKey && answer) {
-      setQuestionKey(handle, questionKey, answer);
+      setQuestionKey(quizID, questionKey, answer);
     }
 
     const isLast = selectedOption.isLast();
 
     if (isLast) {
-      finishQuiz(handle);
-      return router.push(`/quiz/${handle}/results`);
+      finishQuiz(quizID);
+      return router.push(`/quiz/${quizID}/results`);
     }
 
     const next = selectedOption.getNextQuestionId();
 
-    router.push(`/quiz/${handle}/${next}`);
+    router.push(`/quiz/${quizID}/${next}`);
   };
 
   return (
