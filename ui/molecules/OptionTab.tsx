@@ -24,6 +24,7 @@ const Container = styled.div`
   background: white;
   box-sizing: border-box;
   min-height: 48px;
+  text-align: center;
 `;
 
 const SelectionContainer = styled(Flex)`
