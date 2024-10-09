@@ -22,7 +22,6 @@ import OptionSelect from "@/ui/organizms/screens/OptionSelect";
 import TextInput from "@/ui/organizms/screens/TextInput";
 
 type Props = {
-  quizID: string;
   questionDTO: QuestionDTO;
   quizDTO: QuizDTO;
 };
@@ -56,7 +55,7 @@ export const getStaticProps: GetStaticProps<
   const questionDTO = quizDTO.questions.find((dto) => dto.id === questionID)!;
 
   return {
-    props: { quizID, questionDTO, quizDTO },
+    props: { questionDTO, quizDTO },
   };
 };
 
@@ -66,7 +65,7 @@ const TYPE_TO_SCREEN = new Map<QuestionType, React.FC<ScreenProps>>([
   [QuestionType.TextInput, TextInput],
 ]);
 
-export default function QuizQuestion({ questionDTO, quizDTO, quizID }: Props) {
+export default function QuizQuestion({ questionDTO, quizDTO }: Props) {
   const results = useSelector((state: RootState) => state.quizzes.results);
   const router = useRouter();
   const [currentResult, setCurrentResult] = useState<QuizResultDTO>();
@@ -74,6 +73,7 @@ export default function QuizQuestion({ questionDTO, quizDTO, quizID }: Props) {
   const question = getQuestion(questionDTO);
   const quiz = getQuiz(quizDTO);
   const questionID = question.getId();
+  const quizID = quiz.getId();
 
   const type = question.getType();
   const questionKey = question.getStoredKey();

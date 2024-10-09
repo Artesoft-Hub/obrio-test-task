@@ -7,6 +7,7 @@ import { QuestionQuery } from "@/domain/model/question.query";
 import { QuizResultDTO } from "@/domain/model/result.dto";
 
 import Flex, { Gap } from "@/ui/atoms/Flex";
+import Typography from "@/ui/atoms/Typography";
 import QuestionTitle from "@/ui/molecules/QuestionTitle";
 
 import QuizOptions from "../QuizOptions";
@@ -24,11 +25,13 @@ const Container = styled(Flex)`
 
 const OptionSelect = ({ question, submitAnswer, result }: Props) => {
   const title = question.getTitle(result?.keys);
+  const description = question.getDescription();
   const options = question.getOptions();
 
   return (
     <Container alignitems="center" direction="column" gap={Gap.Bigger}>
       <QuestionTitle title={title} />
+      <Typography>{description}</Typography>
       <QuizOptions
         options={options}
         submitAnswer={submitAnswer}
