@@ -11,6 +11,7 @@ export const mockData = [
         id: "q1",
         title: "Select your gender:",
         type: QuestionType.OptionSelect,
+        store_key: "gender",
         options: [
           {
             id: "a1",
@@ -50,6 +51,7 @@ export const mockData = [
         id: "q3",
         title: "Are you a single parent?",
         type: QuestionType.OptionSelect,
+        store_key: "has_children",
         options: [
           {
             id: "a5",
@@ -69,6 +71,7 @@ export const mockData = [
         id: "q4",
         title: "Are you a parent?",
         type: QuestionType.OptionSelect,
+        store_key: "has_children",
         options: [
           {
             id: "a7",
@@ -87,7 +90,7 @@ export const mockData = [
       {
         id: "q5",
         title:
-          "{Gender} {who have children (if have children)} need a slightly different approach to improve their relationship. Which statement best describes you?",
+          "{{gender}} {who have children (has_children)} need a slightly different approach to improve their relationship. Which statement best describes you?",
         type: QuestionType.OptionSelect,
         options: [
           {
@@ -117,7 +120,7 @@ export const mockData = [
       {
         id: "q6",
         title:
-          "Single {gender} {who have children (if have children)} need a slightly different approach to find their perfect partner. But first, how did you feel in your last relationship?",
+          "Single {{gender}} {who have children (has_children)} need a slightly different approach to find their perfect partner. But first, how did you feel in your last relationship?",
         type: QuestionType.OptionSelect,
         options: [
           {
