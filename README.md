@@ -28,6 +28,7 @@ The application will be available at http://localhost:3000.
 ## Downsides
 
 This project was built in a short term, so there are several areas for improvement:
+-  Usage of Pages Router: to match requirements with using `getStaticProps` and `getStaticPaths` I had to use old router
 -	Needs More Decomposition: Some components and logic could be further broken down to improve readability and maintainability. Especially `useHistory()`
 -   Lack of Redux Persist: Quiz progress and results are not persisted across page reloads or sessions.
 -   Issue with framer-motion: There is a known issue with the framer-motion component on the initial quiz request, affecting smooth animations.
